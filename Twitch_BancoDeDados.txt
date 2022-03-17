@@ -1,0 +1,53 @@
+Usuário
+FK wallet
+	-> Criador
+	FK Usuário
+	-> Prime
+	FK Usuário
+	
+Transmissão
+FK Criador
+FK Categoria
+
+View
+FK Usuário
+FK Transmissão
+
+Anunciante
+
+Anúncio
+FK Anunciante
+
+Anunciados
+FK Anúncio
+FK Transmissão
+
+Sub
+FK Prime
+FK Criador
+
+Follow
+FK Usuário
+FK Criador
+
+Mensagem
+FK Usuário
+	-> MsgChat
+	FK Chat
+	-> MsgSussuro
+	FK Sussuro
+
+Clipe
+FK Transmissão
+FK Usuário
+
+Chat
+FK Transmissão
+
+Sussurro
+FK User
+FK User
+
+Emote
+FK Criador
+
