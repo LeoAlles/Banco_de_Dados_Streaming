@@ -1,0 +1,224 @@
+/* Lógico_1: */
+
+CREATE TABLE Usuários (
+    email BIT,
+    saldoBits BIT,
+    nomeUsuário BIT PRIMARY KEY,
+    dataNascimento BIT,
+    telefone BIT,
+    bio BIT
+);
+
+CREATE TABLE Criadores Parceiros da Twitch (
+    saldoDinheiro INTEGER,
+    fk_Usuários_nomeUsuário BIT PRIMARY KEY,
+    fk_Usuários_nomeUsuário_ CHAR,
+    numero de bits BIT
+);
+
+CREATE TABLE Usuários Prime (
+    fk_Usuários_nomeUsuário BIT PRIMARY KEY
+);
+
+CREATE TABLE Emotes (
+    NomeEmote BIT PRIMARY KEY,
+    imagem BIT,
+    fk_Inscrição_idInscrição BIT
+);
+
+CREATE TABLE Inscrição (
+    idInscrição BIT PRIMARY KEY,
+    início BIT,
+    fim BIT,
+    preço BLOB,
+    fk_Usuários_nomeUsuário BIT,
+    data BIT,
+    fk_Criadores Parceiros da Twitch_fk_Usuários_nomeUsuário BIT,
+    fk_Usuários Prime_fk_Usuários_nomeUsuário BIT,
+    data BIT
+);
+
+CREATE TABLE Transmissão (
+    Data BIT,
+    Horário BIT,
+    Nome BIT,
+    número de espectadores BIT,
+    fk_Usuários_nomeUsuário BIT,
+    PRIMARY KEY (Data, Horário)
+);
+
+CREATE TABLE Clipes (
+    duração BIT,
+    idClipe BIT PRIMARY KEY,
+    visualizaçõs do clipe BIT,
+    fk_Usuários_nomeUsuário BIT,
+    fk_Transmissão_Data BIT,
+    fk_Transmissão_Horário BIT
+);
+
+CREATE TABLE Anunciante (
+    NomeEmpresa BIT PRIMARY KEY
+);
+
+CREATE TABLE Anúncio (
+    númeroAnúncio BIT PRIMARY KEY,
+    vídeo BIT,
+    fk_Anunciante_NomeEmpresa BIT
+);
+
+CREATE TABLE MensagemChat (
+    texto BIT,
+    timestamp BIT PRIMARY KEY,
+    fk_Transmissão_Data BIT,
+    fk_Transmissão_Horário BIT,
+    fk_Usuários_nomeUsuário BIT
+);
+
+CREATE TABLE Categorias (
+    nome BIT PRIMARY KEY
+);
+
+CREATE TABLE Tags (
+    nome BIT PRIMARY KEY
+);
+
+CREATE TABLE Segue (
+    fk_Usuários_nomeUsuário BIT,
+    fk_Usuários_nomeUsuário_ BIT
+);
+
+CREATE TABLE Sussurro (
+    fk_Usuários_nomeUsuário BIT,
+    fk_Usuários_nomeUsuário_ BIT,
+    horário BIT,
+    data BIT,
+    texto BIT,
+    PRIMARY KEY (horário, data)
+);
+
+CREATE TABLE Contém (
+    fk_Transmissão_Data BIT,
+    fk_Transmissão_Horário BIT,
+    fk_Anúncio_númeroAnúncio BIT
+);
+
+CREATE TABLE Categorização (
+    fk_Transmissão_Data BIT,
+    fk_Transmissão_Horário BIT,
+    fk_Categorias_nome BIT
+);
+
+CREATE TABLE Rotulação (
+    fk_Tags_nome BIT,
+    fk_Categorias_nome BIT
+);
+ 
+ALTER TABLE Criadores Parceiros da Twitch ADD CONSTRAINT FK_Criadores Parceiros da Twitch_2
+    FOREIGN KEY (fk_Usuários_nomeUsuário, fk_Usuários_nomeUsuário_)
+    REFERENCES Usuários (nomeUsuário, nomeUsuário)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE Usuários Prime ADD CONSTRAINT FK_Usuários Prime_2
+    FOREIGN KEY (fk_Usuários_nomeUsuário)
+    REFERENCES Usuários (nomeUsuário)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE Emotes ADD CONSTRAINT FK_Emotes_2
+    FOREIGN KEY (fk_Inscrição_idInscrição)
+    REFERENCES Inscrição (idInscrição)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE Inscrição ADD CONSTRAINT FK_Inscrição_2
+    FOREIGN KEY (fk_Usuários_nomeUsuário)
+    REFERENCES Usuários (nomeUsuário)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE Inscrição ADD CONSTRAINT FK_Inscrição_3
+    FOREIGN KEY (fk_Criadores Parceiros da Twitch_fk_Usuários_nomeUsuário)
+    REFERENCES Criadores Parceiros da Twitch (fk_Usuários_nomeUsuário)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE Inscrição ADD CONSTRAINT FK_Inscrição_4
+    FOREIGN KEY (fk_Usuários Prime_fk_Usuários_nomeUsuário)
+    REFERENCES Usuários Prime (fk_Usuários_nomeUsuário)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE Transmissão ADD CONSTRAINT FK_Transmissão_2
+    FOREIGN KEY (fk_Usuários_nomeUsuário)
+    REFERENCES Usuários (nomeUsuário)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE Clipes ADD CONSTRAINT FK_Clipes_2
+    FOREIGN KEY (fk_Usuários_nomeUsuário)
+    REFERENCES Usuários (nomeUsuário)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE Clipes ADD CONSTRAINT FK_Clipes_3
+    FOREIGN KEY (fk_Transmissão_Data, fk_Transmissão_Horário)
+    REFERENCES Transmissão (Data, Horário)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE Anúncio ADD CONSTRAINT FK_Anúncio_2
+    FOREIGN KEY (fk_Anunciante_NomeEmpresa)
+    REFERENCES Anunciante (NomeEmpresa)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE MensagemChat ADD CONSTRAINT FK_MensagemChat_2
+    FOREIGN KEY (fk_Transmissão_Data, fk_Transmissão_Horário)
+    REFERENCES Transmissão (Data, Horário)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE MensagemChat ADD CONSTRAINT FK_MensagemChat_3
+    FOREIGN KEY (fk_Usuários_nomeUsuário)
+    REFERENCES Usuários (nomeUsuário)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE Segue ADD CONSTRAINT FK_Segue_1
+    FOREIGN KEY (fk_Usuários_nomeUsuário)
+    REFERENCES Usuários (nomeUsuário)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE Segue ADD CONSTRAINT FK_Segue_2
+    FOREIGN KEY (fk_Usuários_nomeUsuário_)
+    REFERENCES Usuários (nomeUsuário)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE Sussurro ADD CONSTRAINT FK_Sussurro_2
+    FOREIGN KEY (fk_Usuários_nomeUsuário)
+    REFERENCES Usuários (nomeUsuário)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE Sussurro ADD CONSTRAINT FK_Sussurro_3
+    FOREIGN KEY (fk_Usuários_nomeUsuário_)
+    REFERENCES Usuários (nomeUsuário)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE Contém ADD CONSTRAINT FK_Contém_1
+    FOREIGN KEY (fk_Transmissão_Data, fk_Transmissão_Horário)
+    REFERENCES Transmissão (Data, Horário)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE Contém ADD CONSTRAINT FK_Contém_2
+    FOREIGN KEY (fk_Anúncio_númeroAnúncio)
+    REFERENCES Anúncio (númeroAnúncio)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE Categorização ADD CONSTRAINT FK_Categorização_1
+    FOREIGN KEY (fk_Transmissão_Data, fk_Transmissão_Horário)
+    REFERENCES Transmissão (Data, Horário)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE Categorização ADD CONSTRAINT FK_Categorização_2
+    FOREIGN KEY (fk_Categorias_nome)
+    REFERENCES Categorias (nome)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE Rotulação ADD CONSTRAINT FK_Rotulação_1
+    FOREIGN KEY (fk_Tags_nome)
+    REFERENCES Tags (nome)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE Rotulação ADD CONSTRAINT FK_Rotulação_2
+    FOREIGN KEY (fk_Categorias_nome)
+    REFERENCES Categorias (nome)
+    ON DELETE SET NULL;
