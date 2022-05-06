@@ -156,68 +156,125 @@ CREATE TABLE Visualizacao(
   	FOREIGN KEY (idTransmissao) REFERENCES Transmissao(idTransmissao) on DELETE cascade
 );
 
-INSERT INTO Usuarios VALUES('email1@email.com',0,'User1','2001-05-01','123456789','Sou um user da Twitch');
-INSERT INTO Usuarios VALUES('email2@email.com',15,'User2','2001-06-11','123456789','Sou um user da Twitch');
-INSERT INTO Usuarios VALUES('email3@email.com',19,'User3','2001-09-11','123456789','Sou um user da Twitch');
-INSERT INTO Usuarios VALUES('email4@email.com',4,'User4','2002-12-01','123456789','Sou um user da Twitch');
-INSERT INTO Usuarios VALUES('email5@email.com',19,'User5','2001-11-21','123456789','Sou um user da Twitch');
-INSERT INTO Usuarios VALUES('email6@email.com',4,'User6','2009-12-31','123456789','Sou um user da Twitch');
-INSERT INTO Usuarios VALUES('email7@email.com',3,'User7','2009-12-31','123456789','Sou um user da Twitch');
+INSERT INTO Usuarios VALUES('Joao@email.com',0,'Joao','2001-05-01','123456789','Sou um user da Twitch');
+INSERT INTO Usuarios VALUES('Pedro@email.com',15,'Pedro','2001-06-11','123456789','Sou um user da Twitch');
+INSERT INTO Usuarios VALUES('Leonardo@email.com',19,'Leonardo','2001-09-11','123456789','Sou um user da Twitch');
+INSERT INTO Usuarios VALUES('Gabriella@email.com',4,'Gabriella','2002-12-01','123456789','Sou um user da Twitch');
+INSERT INTO Usuarios VALUES('Nikolas@email.com',19,'Nikolas','2001-11-21','123456789','Sou um user da Twitch');
+INSERT INTO Usuarios VALUES('Maria@email.com',4,'Maria','2009-12-31','123456789','Sou um user da Twitch');
+INSERT INTO Usuarios VALUES('Helena@email.com',3,'Helena','2009-12-31','123456789','Sou um user da Twitch');
+INSERT INTO Usuarios VALUES('Leticia@email.com',0,'Leticia','2001-05-01','123456789','Sou um user da Twitch');
 
-INSERT INTO CriadoresParceirosdaTwitch VALUES(10,'User4');
-INSERT INTO CriadoresParceirosdaTwitch VALUES(14,'User5');
-INSERT INTO CriadoresParceirosdaTwitch VALUES(20,'User6');
-INSERT INTO CriadoresParceirosdaTwitch VALUES(23,'User7');
+INSERT INTO Usuarios VALUES('Carlos@email.com',15,'Carlos','2001-06-11','123456789','Sou um user da Twitch');
+INSERT INTO Usuarios VALUES('Matheus@email.com',19,'Matheus','2001-09-11','123456789','Sou um user da Twitch');
+INSERT INTO Usuarios VALUES('Gabriela@email.com',4,'Gabriela','2002-12-01','123456789','Sou um user da Twitch');
+INSERT INTO Usuarios VALUES('Renata@email.com',19,'Renata','2001-11-21','123456789','Sou um user da Twitch');
 
-INSERT INTO Inscricao VALUES('123456789012', '2009-12-31','2009-12-31', 10, 'User5', 'User1');
-INSERT INTO Inscricao VALUES('123456789013', '2009-12-31','2009-12-31', 10, 'User6', 'User4');
-INSERT INTO Inscricao VALUES('123456789014', '2009-12-31','2009-12-31', 10, 'User4', 'User3');
-INSERT INTO Inscricao VALUES('123456789015', '2009-12-31','2010-02-26', 15, 'User4', 'User2');
+INSERT INTO Usuarios VALUES('Gaules@email.com',3,'Gaules','2009-12-31','123456789','Sou um user da Twitch');
+INSERT INTO Usuarios VALUES('Alanzoka@email.com',3,'Alanzoka','2009-12-31','123456789','Sou um user da Twitch');
+INSERT INTO Usuarios VALUES('Lett@email.com',3,'Lett','2009-12-31','123456789','Sou um user da Twitch');
+INSERT INTO Usuarios VALUES('Shroud@email.com',3,'Shroud','2009-12-31','123456789','Sou um user da Twitch');
 
-INSERT INTO UsuariosPrime VALUES('User4','123456789012');
-INSERT INTO UsuariosPrime VALUES('User5','123456789014');
-INSERT INTO UsuariosPrime VALUES('User6');
+INSERT INTO CriadoresParceirosdaTwitch VALUES(10,'Gaules');
+INSERT INTO CriadoresParceirosdaTwitch VALUES(14,'Alanzoka');
+INSERT INTO CriadoresParceirosdaTwitch VALUES(20,'Lett');
+INSERT INTO CriadoresParceirosdaTwitch VALUES(23,'Shroud');
 
-INSERT INTO Segue VALUES('User1', 'User2');
-INSERT INTO Segue VALUES('User2', 'User3');
-INSERT INTO Segue VALUES('User3', 'User1');
+INSERT INTO Inscricao VALUES('123456789011', '2009-12-31','2009-12-31', 10, 'Gaules', 'Joao');
+INSERT INTO Inscricao VALUES('123456789012', '2009-12-31','2009-12-31', 10, 'Gaules', 'Pedro');
+INSERT INTO Inscricao VALUES('123456789013', '2009-12-31','2009-12-31', 10, 'Gaules', 'Leonardo');
+INSERT INTO Inscricao VALUES('123456789014', '2009-12-31','2009-12-31', 10, 'Gaules', 'Lett');
+INSERT INTO Inscricao VALUES('123456789020', '2009-12-31','2010-02-26', 15, 'Gaules', 'Maria');
+
+INSERT INTO Inscricao VALUES('123456789015', '2009-12-31','2009-12-31', 10, 'Lett', 'Gaules');
+INSERT INTO Inscricao VALUES('123456789016', '2009-12-31','2010-02-26', 15, 'Lett', 'Gabriela');
+INSERT INTO Inscricao VALUES('123456789017', '2009-12-31','2009-12-31', 10, 'Lett', 'Renata');
+INSERT INTO Inscricao VALUES('123456789018', '2009-12-31','2010-02-26', 15, 'Lett', 'Nikolas');
+
+INSERT INTO Inscricao VALUES('123456789019', '2009-12-31','2009-12-31', 10, 'Alanzoka', 'Nikolas');
+INSERT INTO Inscricao VALUES('123456789010', '2009-12-31','2010-02-26', 15, 'Alanzoka', 'Carlos');
+
+INSERT INTO UsuariosPrime VALUES('Carlos','123456789010');
+INSERT INTO UsuariosPrime VALUES('Matheus');
+INSERT INTO UsuariosPrime VALUES('Gabriela','123456789016');
+INSERT INTO UsuariosPrime VALUES('Renata','123456789017');
+INSERT INTO UsuariosPrime VALUES('Maria','123456789020');
+
+
+INSERT INTO Segue VALUES('Gaules', 'Shroud');
+INSERT INTO Segue VALUES('Lett', 'Shroud');
+INSERT INTO Segue VALUES('Alanzoka', 'Shroud');
+INSERT INTO Segue VALUES('Leonardo', 'Shroud');
+INSERT INTO Segue VALUES('Nikolas', 'Shroud');
+INSERT INTO Segue VALUES('Maria', 'Shroud');
+INSERT INTO Segue VALUES('Leonardo', 'Nikolas');
+INSERT INTO Segue VALUES('Nikolas', 'Leonardo');
 
 INSERT INTO Emotes VALUES('carinha feliz','emotes/img1','123456789012');
 INSERT INTO Emotes VALUES('carinha triste','emotes/img2','123456789013');
 INSERT INTO Emotes VALUES('bola de futebol','emotes/img3','123456789014');
  
-INSERT INTO Transmissao VALUES('123456789011','2004-10-19 10:23:54','2004-10-19 10:54:54','Transmissao 1', 'User5');
-INSERT INTO Transmissao VALUES('123456789012','2004-10-19 10:23:57','2004-10-19 11:54:54','Transmissao 2', 'User6');
-INSERT INTO Transmissao VALUES('123456789013','2004-10-19 11:23:54','2004-10-19 16:54:54','Transmissao 3', 'User4');
-INSERT INTO Transmissao VALUES('123456789014','2004-10-19 11:23:54','2004-10-19 16:54:54','Transmissao 4', 'User7');
+INSERT INTO Transmissao VALUES('123456789011','2004-10-19 10:23:54','2004-10-19 10:54:54','Furia x Astralis', 'Gaules');
+INSERT INTO Transmissao VALUES('123456789012','2004-10-19 10:23:57','2004-10-19 11:54:54','NBA no Gau', 'Gaules');
+INSERT INTO Transmissao VALUES('123456789013','2004-10-19 11:23:54','2004-10-19 16:54:54','Navi x G2', 'Gaules');
+INSERT INTO Transmissao VALUES('123456789014','2004-10-19 11:23:54','2004-10-19 16:54:54','Pre-Jogo', 'Gaules');
 
-INSERT INTO Clipes VALUES('142', '123456789012', 543, 12, 'User1','123456789011');
-INSERT INTO Clipes VALUES('156', '123456789013', 1543, 16, 'User1','123456789012');
-INSERT INTO Clipes VALUES('172', '123456789015', 5441, 21, 'User1','123456789012');
+INSERT INTO Transmissao VALUES('123456789015','2004-10-19 10:23:54','2004-10-19 10:54:54','Jogando GTA', 'Alanzoka');
+INSERT INTO Transmissao VALUES('123456789016','2004-10-19 10:23:57','2004-10-19 11:54:54','Jogando Elden Ring', 'Alanzoka');
+
+INSERT INTO Transmissao VALUES('123456789019','2004-10-19 10:23:54','2004-10-19 10:54:54','CS com amigos', 'Lett');
+INSERT INTO Transmissao VALUES('123456789010','2004-10-19 10:23:57','2004-10-19 11:54:54','Jogando f1', 'Lett');
+INSERT INTO Transmissao VALUES('123456789021','2004-10-19 11:23:54','2004-10-19 16:54:54','Lobby', 'Lett');
+INSERT INTO Transmissao VALUES('123456789022','2004-10-19 11:23:54','2004-10-19 16:54:54','Among Us', 'Lett');
+
+INSERT INTO Transmissao VALUES('123456789023','2004-10-19 10:23:54','2004-10-19 10:54:54','CSGO', 'Shroud');
+INSERT INTO Transmissao VALUES('123456789024','2004-10-19 10:23:57','2004-10-19 11:54:54','Rainbow-Six', 'Shroud');
+INSERT INTO Transmissao VALUES('123456789025','2004-10-19 11:23:54','2004-10-19 16:54:54','PUBG', 'Shroud');
+
+
+INSERT INTO Clipes VALUES('142', '123456789011', 543, 12, 'Maria','123456789011'); --Gaules
+INSERT INTO Clipes VALUES('156', '123456789012', 1543, 16, 'Leonardo','123456789012');
+INSERT INTO Clipes VALUES('172', '123456789013', 5441, 21, 'Nikolas','123456789012');
+
+INSERT INTO Clipes VALUES('156', '123456789014', 1543, 16, 'Renata','123456789015'); --Alan
+INSERT INTO Clipes VALUES('172', '123456789015', 5441, 21, 'Pedro','123456789015'); 
+
+INSERT INTO Clipes VALUES('156', '123456789016', 1543, 16, 'Leonardo','123456789019'); --Lett
+INSERT INTO Clipes VALUES('172', '123456789017', 5441, 21, 'Nikolas','123456789010');
 
 INSERT INTO Anunciante VALUES('DELL');
 INSERT INTO Anunciante VALUES('INTEL');
 INSERT INTO Anunciante VALUES('APPLE');
 
-INSERT INTO Anuncio VALUES(4,'anuncios/video1', 'DELL');
-INSERT INTO Anuncio VALUES(5,'anuncios/video2', 'DELL');
-INSERT INTO Anuncio VALUES(1,'anuncios/video3', 'APPLE');
+INSERT INTO Anuncio VALUES(4,'anuncios/videoDell', 'DELL');
+INSERT INTO Anuncio VALUES(5,'anuncios/videoDell2', 'DELL');
+INSERT INTO Anuncio VALUES(1,'anuncios/videoApple', 'APPLE');
 
-INSERT INTO MensagemChat VALUES('Ola, que dia bonito', '2004-10-19 11:23:54', '123456789011', 'User1');
-INSERT INTO MensagemChat VALUES('Como vai?', '2004-11-19 10:23:56', '123456789013', 'User2');
-INSERT INTO MensagemChat VALUES('Vou bem', '2004-11-19 10:23:59', '123456789013', 'User1');
+INSERT INTO MensagemChat VALUES('Ola, que dia bonito', '2004-10-19 11:23:54', '123456789011', 'Gabriela');
+
+INSERT INTO MensagemChat VALUES('Como vai?', '2004-11-19 10:23:56', '123456789013', 'Matheus');
+INSERT INTO MensagemChat VALUES('Vou bem', '2004-11-19 10:23:59', '123456789013', 'Maria');
 
 INSERT INTO Categorias VALUES ('CSGO');
 INSERT INTO Categorias VALUES ('Esporte');
 INSERT INTO Categorias VALUES ('DOTA2');
+INSERT INTO Categorias VALUES ('GTA');
 
-INSERT INTO Cheer VALUES('User4','User4',20,'2020-02-7 07:12:15');
-INSERT INTO Cheer VALUES('User1','User5',20,'2020-02-7 07:12:15');
-INSERT INTO Cheer VALUES('User2','User6',20,'2020-02-7 07:12:15');
+INSERT INTO Cheer VALUES('Matheus','Lett',20,'2020-02-7 07:12:15');
+INSERT INTO Cheer VALUES('Gabriela','Lett',20,'2020-02-7 07:12:15');
 
-INSERT INTO Sussurro VALUES('User1','User2','2020-02-7 07:12:15','eae');
-INSERT INTO Sussurro VALUES('User1','User3','2020-02-7 07:12:15','qualquer coisa');
-INSERT INTO Sussurro VALUES('User2','User1','2020-02-7 08:12:15','eae a');
+INSERT INTO Cheer VALUES('Helena','Gaules',20,'2020-02-7 07:12:15');
+INSERT INTO Cheer VALUES('Joao','Gaules',20,'2020-02-7 07:12:15');
+
+INSERT INTO Cheer VALUES('Renata','Alanzoka',20,'2020-02-7 07:12:15');
+INSERT INTO Cheer VALUES('Matheus','Alanzoka',20,'2020-02-7 07:12:15');
+
+INSERT INTO Cheer VALUES('Matheus','Shroud',20,'2020-02-7 07:12:15');
+INSERT INTO Cheer VALUES('Leticia','Shroud',20,'2020-02-7 07:12:15');
+
+INSERT INTO Sussurro VALUES('Leonardo','Nikolas','2020-02-7 07:12:15','eae');
+INSERT INTO Sussurro VALUES('Nikolas','Leonardo','2020-02-7 07:12:15','eae');
+INSERT INTO Sussurro VALUES('Leonardo','Nikolas','2020-02-7 08:12:15','Tudo certo?');
 
 insert INTO Tags VALUES('Shooter');
 insert INTO Tags VALUES('FPS');
@@ -226,13 +283,12 @@ insert INTO Tags VALUES('MOBA');
 insert INTO Tags VALUES('Strategy');
 
 
-INSERT INTO Segue VALUES('User2','User1');
-INSERT INTO Segue VALUES('User1','User4');
-
-
 Insert INtO categorizacao values('123456789011','CSGO');
-Insert INtO categorizacao values('123456789012','CSGO');
-Insert INtO categorizacao values('123456789013','DOTA2');
+Insert INtO categorizacao values('123456789013','CSGO');
+Insert INtO categorizacao values('123456789014','CSGO');
+Insert INtO categorizacao values('123456789019','CSGO');
+Insert INtO categorizacao values('123456789012','Esporte');
+Insert INtO categorizacao values('123456789015','GTA');
 
 insert into Rotulacao values('Shooter','CSGO');
 insert into Rotulacao values('FPS','CSGO');
@@ -241,22 +297,6 @@ insert into Rotulacao values('Action','DOTA2');
 insert into Rotulacao values('MOBA','DOTA2');
 INSERT INTO rotulacao values('Strategy','DOTA2');
 insert into Rotulacao values('Action','Esporte');
-
-SELECT * FROM Usuarios;
-SELECT * FROM UsuariosPrime;
-SELECT * FROM CriadoresParceirosdaTwitch;
-SELECT * FROM Inscricao;
-SELECT * FROM Segue;
-SELECT * FROM Emotes;
-SELECT * FROM Transmissao;
-SELECT * FROM Clipes;
-SELECT * FROM Anunciante;
-SELECT * FROM Anuncio;
-SELECT * FROM MensagemChat;
-SELECT * FROM cheer;
-SELECT * FROM Categorias;
-SELECT * FROM Sussurro;
-SELECT * FROM Tags;   
 
 
 --Ranking de criadorpareceiro em relação a quantos inscritos eles tem (MODIFICAR, tem que usar 3 tabelas por consulta)
@@ -276,9 +316,7 @@ SELECT nomeusuario,email
 from usuarios join usuariosprime ON(nomeusuario = nomeUsuarioPrime) join criadoresparceirosdatwitch ON (criadorparceiro = nomeusuario)
 WHERE saldobits = (select max(saldobits)
                    from usuarios);
+                   
+SELECT nomecategoria,count(idtransmissao) FROM transmissao join categorizacao using(idTransmissao) group BY(nomecategoria);
 
 
-
-
-
---
