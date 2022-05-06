@@ -162,14 +162,17 @@ INSERT INTO Usuarios VALUES('email3@email.com',19,'User3','2001-09-11','12345678
 INSERT INTO Usuarios VALUES('email4@email.com',4,'User4','2002-12-01','123456789','Sou um user da Twitch');
 INSERT INTO Usuarios VALUES('email5@email.com',19,'User5','2001-11-21','123456789','Sou um user da Twitch');
 INSERT INTO Usuarios VALUES('email6@email.com',4,'User6','2009-12-31','123456789','Sou um user da Twitch');
+INSERT INTO Usuarios VALUES('email7@email.com',3,'User7','2009-12-31','123456789','Sou um user da Twitch');
 
 INSERT INTO CriadoresParceirosdaTwitch VALUES(10,'User4');
 INSERT INTO CriadoresParceirosdaTwitch VALUES(14,'User5');
 INSERT INTO CriadoresParceirosdaTwitch VALUES(20,'User6');
+INSERT INTO CriadoresParceirosdaTwitch VALUES(23,'User7');
 
 INSERT INTO Inscricao VALUES('123456789012', '2009-12-31','2009-12-31', 10, 'User5', 'User1');
 INSERT INTO Inscricao VALUES('123456789013', '2009-12-31','2009-12-31', 10, 'User6', 'User4');
 INSERT INTO Inscricao VALUES('123456789014', '2009-12-31','2009-12-31', 10, 'User4', 'User3');
+INSERT INTO Inscricao VALUES('123456789015', '2009-12-31','2010-02-26', 15, 'User4', 'User2');
 
 INSERT INTO UsuariosPrime VALUES('User4','123456789012');
 INSERT INTO UsuariosPrime VALUES('User5','123456789014');
@@ -186,6 +189,7 @@ INSERT INTO Emotes VALUES('bola de futebol','emotes/img3','123456789014');
 INSERT INTO Transmissao VALUES('123456789011','2004-10-19 10:23:54','2004-10-19 10:54:54','Transmissao 1', 'User5');
 INSERT INTO Transmissao VALUES('123456789012','2004-10-19 10:23:57','2004-10-19 11:54:54','Transmissao 2', 'User6');
 INSERT INTO Transmissao VALUES('123456789013','2004-10-19 11:23:54','2004-10-19 16:54:54','Transmissao 3', 'User4');
+INSERT INTO Transmissao VALUES('123456789014','2004-10-19 11:23:54','2004-10-19 16:54:54','Transmissao 4', 'User7');
 
 INSERT INTO Clipes VALUES('142', '123456789012', 543, 12, 'User1','123456789011');
 INSERT INTO Clipes VALUES('156', '123456789013', 1543, 16, 'User1','123456789012');
@@ -218,9 +222,25 @@ INSERT INTO Sussurro VALUES('User2','User1','2020-02-7 08:12:15','eae a');
 insert INTO Tags VALUES('Shooter');
 insert INTO Tags VALUES('FPS');
 insert INTO Tags VALUES('Action');
+insert INTO Tags VALUES('MOBA');
+insert INTO Tags VALUES('Strategy');
+
 
 INSERT INTO Segue VALUES('User2','User1');
 INSERT INTO Segue VALUES('User1','User4');
+
+
+Insert INtO categorizacao values('123456789011','CSGO');
+Insert INtO categorizacao values('123456789012','CSGO');
+Insert INtO categorizacao values('123456789013','DOTA2');
+
+insert into Rotulacao values('Shooter','CSGO');
+insert into Rotulacao values('FPS','CSGO');
+insert into Rotulacao values('Action','CSGO');
+insert into Rotulacao values('Action','DOTA2');
+insert into Rotulacao values('MOBA','DOTA2');
+INSERT INTO rotulacao values('Strategy','DOTA2');
+insert into Rotulacao values('Action','Esporte');
 
 SELECT * FROM Usuarios;
 SELECT * FROM UsuariosPrime;
@@ -237,3 +257,28 @@ SELECT * FROM cheer;
 SELECT * FROM Categorias;
 SELECT * FROM Sussurro;
 SELECT * FROM Tags;   
+
+
+--Ranking de criadorpareceiro em relação a quantos inscritos eles tem (MODIFICAR, tem que usar 3 tabelas por consulta)
+SELECT criadorparceiro, COUNT(criadorparceiro) as nroInscritos
+from inscricao
+GROUP by criadorparceiro
+order by nroInscritos DESC;
+
+--Tags que rotulam 2 ou mais transmissões
+SELECT nometag
+from categorizacao JOIN transmissao USING(idtransmissao) join rotulacao using(nomecategoria)
+group by nometag
+HAVING count(idtransmissao) >= 2;
+
+--Usuário e seu email. O usuario deve ser prime e um criadores e deve ter o maior número de bits
+SELECT nomeusuario,email
+from usuarios join usuariosprime ON(nomeusuario = nomeUsuarioPrime) join criadoresparceirosdatwitch ON (criadorparceiro = nomeusuario)
+WHERE saldobits = (select max(saldobits)
+                   from usuarios);
+
+
+
+
+
+--
