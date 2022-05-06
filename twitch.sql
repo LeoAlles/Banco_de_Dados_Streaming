@@ -205,10 +205,11 @@ INSERT INTO Segue VALUES('Gaules', 'Shroud');
 INSERT INTO Segue VALUES('Lett', 'Shroud');
 INSERT INTO Segue VALUES('Alanzoka', 'Shroud');
 INSERT INTO Segue VALUES('Leonardo', 'Shroud');
-INSERT INTO Segue VALUES('Nikolas', 'Shroud');
+INSERT INTO Segue VALUES('Nikolas', 'Gaules');
 INSERT INTO Segue VALUES('Maria', 'Shroud');
 INSERT INTO Segue VALUES('Leonardo', 'Nikolas');
 INSERT INTO Segue VALUES('Nikolas', 'Leonardo');
+INSERT INTO Segue VALUES('Nikolas','Alanzoka');
 
 INSERT INTO Emotes VALUES('carinha feliz','emotes/img1','123456789012');
 INSERT INTO Emotes VALUES('carinha triste','emotes/img2','123456789013');
@@ -259,6 +260,11 @@ INSERT INTO Categorias VALUES ('CSGO');
 INSERT INTO Categorias VALUES ('Esporte');
 INSERT INTO Categorias VALUES ('DOTA2');
 INSERT INTO Categorias VALUES ('GTA');
+INSERt into Categorias VALUES ('Among Us');
+INSERt into Categorias VALUEs ('Elden Ring');
+INSERT INTO Categorias VALUES ('F1 2021');
+INSERT INTO Categorias VALUES ('Rainbow-Six');
+INSERT INTO Categorias VALUES ('PUBG');
 
 INSERT INTO Cheer VALUES('Matheus','Lett',20,'2020-02-7 07:12:15');
 INSERT INTO Cheer VALUES('Gabriela','Lett',20,'2020-02-7 07:12:15');
@@ -289,6 +295,13 @@ Insert INtO categorizacao values('123456789014','CSGO');
 Insert INtO categorizacao values('123456789019','CSGO');
 Insert INtO categorizacao values('123456789012','Esporte');
 Insert INtO categorizacao values('123456789015','GTA');
+Insert INTO categorizacao values('123456789016','Elden Ring');
+Insert INTO categorizacao values('123456789010','F1 2021');
+Insert INTO categorizacao values('123456789021','CSGO');
+Insert INTO categorizacao values('123456789022','Among Us');
+Insert INTO categorizacao values('123456789023','CSGO');
+INSERT INTO categorizacao VALUES('123456789024','Rainbow-Six');
+INSERT INTO categorizacao VALUES('123456789025','PUBG');
 
 insert into Rotulacao values('Shooter','CSGO');
 insert into Rotulacao values('FPS','CSGO');
@@ -311,12 +324,18 @@ from categorizacao JOIN transmissao USING(idtransmissao) join rotulacao using(no
 group by nometag
 HAVING count(idtransmissao) >= 2;
 
---Usuário e seu email. O usuario deve ser prime e um criadores e deve ter o maior número de bits
+--Usuário e seu email. O usuario deve ser prime e um criadores, também deve ter o maior número de bits
 SELECT nomeusuario,email
 from usuarios join usuariosprime ON(nomeusuario = nomeUsuarioPrime) join criadoresparceirosdatwitch ON (criadorparceiro = nomeusuario)
 WHERE saldobits = (select max(saldobits)
                    from usuarios);
                    
 SELECT nomecategoria,count(idtransmissao) FROM transmissao join categorizacao using(idTransmissao) group BY(nomecategoria);
+
+
+--Criadores que o Níkolas segue e que fizeram uma transmissão na categoria de CSGO = "Gaules"
+SELECT DISTINCT criador
+FROM segue join transmissao on(transmissao.criador = segue.nomeusuarioseguido) join categorizacao USING (idtransmissao)
+where segue.nomeusuariosegue = 'Nikolas' and nomecategoria = 'CSGO';
 
 
