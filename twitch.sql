@@ -333,9 +333,22 @@ WHERE saldobits = (select max(saldobits)
 SELECT nomecategoria,count(idtransmissao) FROM transmissao join categorizacao using(idTransmissao) group BY(nomecategoria);
 
 
---Criadores que o Níkolas segue e que fizeram uma transmissão na categoria de CSGO = "Gaules"
+--Criadores que o Níkolas segue e que fizeram uma transmissão na categoria de CSGO. = "Gaules"
 SELECT DISTINCT criador
 FROM segue join transmissao on(transmissao.criador = segue.nomeusuarioseguido) join categorizacao USING (idtransmissao)
 where segue.nomeusuariosegue = 'Nikolas' and nomecategoria = 'CSGO';
+
+--Criadores, que o níkolas segue, e seus numeros de inscritos em ordem decrescente
+SELECT criadorparceiro, COUNT(criadorparceiro) as nroInscritos
+from inscricao
+where criadorparceiro in (SELECT DISTINCT criador
+							FROM segue join transmissao on(transmissao.criador = segue.nomeusuarioseguido) 
+							where segue.nomeusuariosegue = 'Nikolas' )
+GROUP by criadorparceiro
+order by nroInscritos DESC;
+
+
+	
+
 
 
