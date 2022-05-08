@@ -256,6 +256,20 @@ INSERT INTO MensagemChat VALUES('Ola, que dia bonito', '2004-10-19 11:23:54', '1
 INSERT INTO MensagemChat VALUES('Como vai?', '2004-11-19 10:23:56', '123456789013', 'Matheus');
 INSERT INTO MensagemChat VALUES('Vou bem', '2004-11-19 10:23:59', '123456789013', 'Maria');
 
+INSERT INTO MensagemChat VALUES('Como vai?', '2004-11-19 10:24:56', '123456789010', 'Joao');
+INSERT INTO MensagemChat VALUES('Como vai?', '2004-11-19 10:25:56', '123456789014', 'Pedro');
+INSERT INTO MensagemChat VALUES('Como vai?', '2004-11-19 10:26:56', '123456789015', 'Leonardo');
+INSERT INTO MensagemChat VALUES('Como vai?', '2004-11-19 10:27:56', '123456789016', 'Matheus');
+INSERT INTO MensagemChat VALUES('Como vai?', '2004-11-19 10:28:56', '123456789019', 'Carlos');
+INSERT INTO MensagemChat VALUES('Como vai?', '2004-11-19 10:29:56', '123456789021', 'Leticia');
+INSERT INTO MensagemChat VALUES('Como vai?', '2004-11-19 10:30:56', '123456789022', 'Helena');
+INSERT INTO MensagemChat VALUES('Como vai?', '2004-11-19 10:31:56', '123456789023', 'Leticia');
+INSERT INTO MensagemChat VALUES('Como vai?', '2004-11-19 10:33:56', '123456789024', 'Leticia');
+INSERT INTO MensagemChat VALUES('Como vai?', '2004-11-19 10:34:56', '123456789025', 'Nikolas');
+
+
+
+
 INSERT INTO Categorias VALUES ('CSGO');
 INSERT INTO Categorias VALUES ('Esporte');
 INSERT INTO Categorias VALUES ('DOTA2');
@@ -347,7 +361,10 @@ where criadorparceiro in (SELECT DISTINCT criador
 GROUP by criadorparceiro
 order by nroInscritos DESC;
 
-
+--Toda informação dos usuários que escreveram no chat de alguma stream do Lett
+select usuarios.email,usuarios.saldobits,usuarios.nomeusuario,usuarios.datanascimento,usuarios.telefone,usuarios.bio
+from transmissao join mensagemchat USING(idtransmissao) Join usuarios using(nomeusuario)
+where transmissao.criador = 'Lett';
 	
 
 
