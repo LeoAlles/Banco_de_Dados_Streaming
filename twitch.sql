@@ -194,7 +194,7 @@ INSERT INTO Inscricao VALUES('123456789018', '2009-12-31','2010-02-26', 15, 'Let
 INSERT INTO Inscricao VALUES('123456789019', '2009-12-31','2009-12-31', 10, 'Alanzoka', 'Nikolas');
 INSERT INTO Inscricao VALUES('123456789010', '2009-12-31','2010-02-26', 15, 'Alanzoka', 'Carlos');
 
-INSERT INTO UsuariosPrime VALUES('Carlos','123456789010');
+INSERT INTO UsuariosPrime VALUES('Leonardo','123456789013');
 INSERT INTO UsuariosPrime VALUES('Matheus');
 INSERT INTO UsuariosPrime VALUES('Gabriela','123456789016');
 INSERT INTO UsuariosPrime VALUES('Renata','123456789017');
@@ -212,8 +212,32 @@ INSERT INTO Segue VALUES('Nikolas', 'Leonardo');
 INSERT INTO Segue VALUES('Nikolas','Alanzoka');
 
 INSERT INTO Emotes VALUES('carinha feliz','emotes/img1','123456789012');
+INSERT INTO Emotes VALUES('carinha triste','emotes/img2','123456789012');
+INSERT INTO Emotes VALUES('bola de futebol','emotes/img3','123456789012');
+
+INSERT INTO Emotes VALUES('carinha feliz','emotes/img1','123456789013');
 INSERT INTO Emotes VALUES('carinha triste','emotes/img2','123456789013');
+INSERT INTO Emotes VALUES('bola de futebol','emotes/img3','123456789013');
+
+INSERT INTO Emotes VALUES('carinha feliz','emotes/img1','123456789020');
+INSERT INTO Emotes VALUES('carinha triste','emotes/img2','123456789020');
+INSERT INTO Emotes VALUES('bola de futebol','emotes/img3','123456789020');
+
+INSERT INTO Emotes VALUES('carinha feliz','emotes/img1','123456789011');
+INSERT INTO Emotes VALUES('carinha triste','emotes/img2','123456789011');
+INSERT INTO Emotes VALUES('bola de futebol','emotes/img3','123456789011');
+
+INSERT INTO Emotes VALUES('carinha feliz','emotes/img1','123456789014');
+INSERT INTO Emotes VALUES('carinha triste','emotes/img2','123456789014');
 INSERT INTO Emotes VALUES('bola de futebol','emotes/img3','123456789014');
+
+INSERT INTO Emotes VALUES('emote1','emotes/img4','123456789015');
+INSERT INTO Emotes VALUES('emote1','emotes/img4','123456789016');
+INSERT INTO Emotes VALUES('emote1','emotes/img4','123456789017');
+INSERT INTO Emotes VALUES('emote1','emotes/img4','123456789018');
+
+INSERT INTO Emotes VALUES('emote2','emotes/img5','123456789019');
+INSERT INTO Emotes VALUES('emote2','emotes/img5','123456789010');
  
 INSERT INTO Transmissao VALUES('123456789011','2004-10-19 10:23:54','2004-10-19 10:54:54','Furia x Astralis', 'Gaules');
 INSERT INTO Transmissao VALUES('123456789012','2004-10-19 10:23:57','2004-10-19 11:54:54','NBA no Gau', 'Gaules');
@@ -366,6 +390,10 @@ select usuarios.email,usuarios.saldobits,usuarios.nomeusuario,usuarios.datanasci
 from transmissao join mensagemchat USING(idtransmissao) Join usuarios using(nomeusuario)
 where transmissao.criador = 'Lett';
 	
+--Usuarios prime com inscrição prime do 'Gaules' e o numero de emotes que eles receberam da inscrição
+select nomeusuarioprime,count(DISTINCT imagem)
+FROM usuariosprime join inscricao on (usuariosprime.idinscricaoprime = idinscricao) join emotes using(idinscricao)
+where inscricao.criadorparceiro = 'Gaules'
+group by nomeusuarioprime
 
-
-
+--Algum tipo de ranking sobre a tabela Segue?
