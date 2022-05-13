@@ -1,3 +1,4 @@
+DROP VIEW IF EXISTS vizualizacoesporusuariodecategoria; 
 DROP TABLE IF EXISTS Usuarios,Usuariosprime,CriadoresParceirosdaTwitch,Emotes,Transmissao,Inscricao,Clipes,Anunciante,Anuncio,MensagemChat,Categorizacao,Categorias,Tags,Sussurro,Segue,Contem,Rotulacao,Cheer,Visualizacao,Anunciou;
 
 CREATE TABLE Usuarios (
@@ -283,6 +284,7 @@ insert into visualizacao VALUES('Gabriela','123456789012');
 insert into visualizacao VALUES('Nikolas','123456789012');  
 insert into visualizacao VALUES('Matheus','123456789012'); 
 
+insert into visualizacao VALUES('Leonardo','123456789013'); -- Leonardo viu 2 transmissoes de csgo
 
 INSERT INTO Clipes VALUES('142', '123456789011', 543, 12, 'Maria','123456789011'); --Gaules
 INSERT INTO Clipes VALUES('156', '123456789012', 1543, 16, 'Leonardo','123456789012');
@@ -379,19 +381,19 @@ INSERT into anunciou VALUES(5,'123456789012');
 INSERT into anunciou VALUES(1,'123456789011');
 INSERT into anunciou VALUES(1,'123456789012');
 
---Ranking de criadorpareceiro em relação a quantos inscritos eles tem (MODIFICAR, tem que usar 3 tabelas por consulta)
+--1) Ranking de criadorpareceiro em relação a quantos inscritos eles tem (MODIFICAR, tem que usar 3 tabelas por consulta)
 SELECT criadorparceiro, COUNT(criadorparceiro) as nroInscritos
 from inscricao
 GROUP by criadorparceiro
 order by nroInscritos DESC;
 
---Tags que rotulam 2 ou mais transmissões
+--2) Tags que rotulam 2 ou mais transmissões
 SELECT nometag
 from categorizacao JOIN transmissao USING(idtransmissao) join rotulacao using(nomecategoria)
 group by nometag
 HAVING count(idtransmissao) >= 2;
 
---Usuário e seu email. O usuario deve ser prime e um criadores, também deve ter o maior número de bits
+--3) Usuário e seu email. O usuario deve ser prime e um criadores, também deve ter o maior número de bits
 SELECT nomeusuario,email
 from usuarios join usuariosprime ON(nomeusuario = nomeUsuarioPrime) join criadoresparceirosdatwitch ON (criadorparceiro = nomeusuario)
 WHERE saldobits = (select max(saldobits)
@@ -400,12 +402,12 @@ WHERE saldobits = (select max(saldobits)
 SELECT nomecategoria,count(idtransmissao) FROM transmissao join categorizacao using(idTransmissao) group BY(nomecategoria);
 
 
---Criadores que o Níkolas segue e que fizeram uma transmissão na categoria de CSGO. = "Gaules"
+--4) Criadores que o Níkolas segue e que fizeram uma transmissão na categoria de CSGO. = "Gaules"
 SELECT DISTINCT criador
 FROM segue join transmissao on(transmissao.criador = segue.nomeusuarioseguido) join categorizacao USING (idtransmissao)
 where segue.nomeusuariosegue = 'Nikolas' and nomecategoria = 'CSGO';
 
---Criadores, que o níkolas segue, e seus numeros de inscritos em ordem decrescente
+--5) Criadores, que o níkolas segue, e seus numeros de inscritos em ordem decrescente
 SELECT criadorparceiro, COUNT(criadorparceiro) as nroInscritos
 from inscricao
 where criadorparceiro in (SELECT DISTINCT criador
@@ -414,18 +416,18 @@ where criadorparceiro in (SELECT DISTINCT criador
 GROUP by criadorparceiro
 order by nroInscritos DESC;
 
---Toda informação dos usuários que escreveram no chat de alguma stream do Lett
+--6) Toda informação dos usuários que escreveram no chat de alguma stream do Lett
 select usuarios.email,usuarios.saldobits,usuarios.nomeusuario,usuarios.datanascimento,usuarios.telefone,usuarios.bio
 from transmissao join mensagemchat USING(idtransmissao) Join usuarios using(nomeusuario)
 where transmissao.criador = 'Lett';
 	
---Usuarios prime com inscrição prime do 'Gaules' e o numero de emotes que eles receberam da inscrição
+--7) Usuarios prime com inscrição prime do 'Gaules' e o numero de emotes que eles receberam da inscrição
 select nomeusuarioprime,count(DISTINCT imagem)
 FROM usuariosprime join inscricao on (usuariosprime.idinscricaoprime = idinscricao) join emotes using(idinscricao)
 where inscricao.criadorparceiro = 'Gaules'
 group by nomeusuarioprime;
 
---Algum tipo de ranking sobre a tabela Segue?
+--8) Algum tipo de ranking sobre a tabela Segue?
 SELECT nomeusuarioseguido, count(nomeusuarioseguido) FROM segue 
 	where (		
       			nomeusuariosegue in (SELECT nomeusuarioseguido from segue where (nomeusuariosegue = 'Nikolas')) 
@@ -436,7 +438,7 @@ SELECT nomeusuarioseguido, count(nomeusuarioseguido) FROM segue
     GROUP by nomeusuarioseguido ORDER by count(nomeusuarioseguido) desc; 
 
 
--- Exibe varias informacoes sobre o usuario nikolas
+--9) Exibe varias informacoes sobre o usuario nikolas
 SELECT  
     nomeusuario, 
     count(DISTINCT criadorparceiro) as inscricoes,
@@ -456,18 +458,28 @@ SELECT
     GROUP by (nomeusuario);
    
 
---Quantas vezes o anuncio de uma empresa foi visto    
+--10) Quantas vezes o anuncio de uma empresa foi visto    
 SELECT nomeEmpresa,COUNT(anunciou)
 	from Anunciou join Anuncio USING(numeroanuncio) JOIN visualizacao USING(idtransmissao) 
 GROUP by(nomeempresa);
 
---Quantas vezes as transmissoes de cada criador foram vistas
+--11) Quantas vezes as transmissoes de cada criador foram vistas
 SELECT criadorparceiro, COUNT(visualizacao) 
 	from criadoresparceirosdatwitch as C join transmissao as T on(C.criadorparceiro = T.criador) join visualizacao USING(idtransmissao)
 GROUP by(criadorparceiro);
 
---Quantos anuncios foram passados pro cada criador
+--12) Quantos anuncios foram passados pro cada criador
 SELECT criadorparceiro, count(anunciou)
 	from criadoresparceirosdatwitch as C join transmissao as T on(C.criadorparceiro = T.criador) join visualizacao USING(idtransmissao) join anunciou USING(idtransmissao)
 GROUP by(criadorparceiro);
 
+-- VIEW
+CREATE VIEW VizualizacoesporUsuariodeCategoria AS
+SELECT nomeusuario, nomecategoria, count(visualizacao) as vizualizacoes
+	FROM visualizacao join categorizacao USING(idtransmissao)
+    GROUP by (nomeusuario, nomecategoria) ORDER by (nomeusuario);
+    
+-- Pega as vizualizacoes por categoria do Leonardo 
+SELECT nomecategoria,vizualizacoes FRom VizualizacoesporUsuariodeCategoria 
+	WHERE nomeusuario = 'Leonardo'
+    GROUP by (nomecategoria, vizualizacoes );
