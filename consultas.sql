@@ -100,3 +100,14 @@ SELECT nomecategoria,vizualizacoes FRom VizualizacoesporUsuariodeCategoria
 	WHERE nomeusuario = 'Leonardo'
     GROUP by (nomecategoria, vizualizacoes );
     
+    
+-- seleciona criadores que fazem transmissoes nas categorias vistas por Leonardo em ordem decrescente de transmissoes feitas.    
+SELECT DISTINCT criador,COUNT(criador) from 
+  VizualizacoesporUsuariodeCategoria 
+  join categorizacao USING(nomecategoria) 
+  join transmissao using(idtransmissao) 
+  WHERE nomeusuario='Leonardo'
+GROUP BY(criador)
+ORDER BY(COUNT(criador)) DESC;
+
+    
