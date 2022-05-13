@@ -173,12 +173,15 @@ INSERT INTO Usuarios VALUES('Renata@email.com',19,'Renata','2001-11-21','1234567
 INSERT INTO Usuarios VALUES('Gaules@email.com',3,'Gaules','2009-12-31','123456789','Sou um user da Twitch');
 INSERT INTO Usuarios VALUES('Alanzoka@email.com',3,'Alanzoka','2009-12-31','123456789','Sou um user da Twitch');
 INSERT INTO Usuarios VALUES('Lett@email.com',3,'Lett','2009-12-31','123456789','Sou um user da Twitch');
-INSERT INTO Usuarios VALUES('Shroud@email.com',3,'Shroud','2009-12-31','123456789','Sou um user da Twitch');
+INSERT INTO Usuarios VALUES('Shroud@email.com',19,'Shroud','2009-12-31','123456789','Sou um user da Twitch');
+INSERT INTO Usuarios VALUES('criadorvazio@email.com',3,'CriadorVazio','2009-12-31','123456789','Sou um user da Twitch');
 
 INSERT INTO CriadoresParceirosdaTwitch VALUES(10,'Gaules');
 INSERT INTO CriadoresParceirosdaTwitch VALUES(14,'Alanzoka');
 INSERT INTO CriadoresParceirosdaTwitch VALUES(20,'Lett');
 INSERT INTO CriadoresParceirosdaTwitch VALUES(23,'Shroud');
+INSERT INTO CriadoresParceirosdaTwitch VALUES(23,'CriadorVazio');
+
 
 INSERT INTO Inscricao VALUES('123456789011', '2009-12-31','2009-12-31', 10, 'Gaules', 'Joao');
 INSERT INTO Inscricao VALUES('123456789012', '2009-12-31','2009-12-31', 10, 'Gaules', 'Pedro');
@@ -199,7 +202,8 @@ INSERT INTO UsuariosPrime VALUES('Matheus');
 INSERT INTO UsuariosPrime VALUES('Gabriela','123456789016');
 INSERT INTO UsuariosPrime VALUES('Renata','123456789017');
 INSERT INTO UsuariosPrime VALUES('Maria','123456789020');
-
+INSERT INTO UsuariosPrime VALUES('Lett');
+INSERT INTO UsuariosPrime VALUES('Shroud');
 
 INSERT INTO Segue VALUES('Gaules', 'Shroud');
 INSERT INTO Segue VALUES('Lett', 'Shroud');
@@ -210,6 +214,12 @@ INSERT INTO Segue VALUES('Maria', 'Shroud');
 INSERT INTO Segue VALUES('Leonardo', 'Nikolas');
 INSERT INTO Segue VALUES('Nikolas', 'Leonardo');
 INSERT INTO Segue VALUES('Nikolas','Alanzoka');
+INSERT INTO Segue VALUES('Leonardo', 'Gaules');
+INSERT INTO Segue VALUES('Gaules', 'Lett');
+INSERT INTO Segue VALUES('Gaules', 'Alanzoka');
+INSERT INTO Segue VALUES('Gaules', 'Leonardo');
+INSERT INTO Segue VALUES('Leonardo', 'CriadorVazio');
+
 
 INSERT INTO Emotes VALUES('carinha feliz','emotes/img1','123456789012');
 INSERT INTO Emotes VALUES('carinha triste','emotes/img2','123456789012');
@@ -256,7 +266,6 @@ INSERT INTO Transmissao VALUES('123456789023','2004-10-19 10:23:54','2004-10-19 
 INSERT INTO Transmissao VALUES('123456789024','2004-10-19 10:23:57','2004-10-19 11:54:54','Rainbow-Six', 'Shroud');
 INSERT INTO Transmissao VALUES('123456789025','2004-10-19 11:23:54','2004-10-19 16:54:54','PUBG', 'Shroud');
 
-
 INSERT INTO Clipes VALUES('142', '123456789011', 543, 12, 'Maria','123456789011'); --Gaules
 INSERT INTO Clipes VALUES('156', '123456789012', 1543, 16, 'Leonardo','123456789012');
 INSERT INTO Clipes VALUES('172', '123456789013', 5441, 21, 'Nikolas','123456789012');
@@ -292,8 +301,6 @@ INSERT INTO MensagemChat VALUES('Como vai?', '2004-11-19 10:33:56', '12345678902
 INSERT INTO MensagemChat VALUES('Como vai?', '2004-11-19 10:34:56', '123456789025', 'Nikolas');
 
 
-
-
 INSERT INTO Categorias VALUES ('CSGO');
 INSERT INTO Categorias VALUES ('Esporte');
 INSERT INTO Categorias VALUES ('DOTA2');
@@ -317,8 +324,8 @@ INSERT INTO Cheer VALUES('Matheus','Shroud',20,'2020-02-7 07:12:15');
 INSERT INTO Cheer VALUES('Leticia','Shroud',20,'2020-02-7 07:12:15');
 
 INSERT INTO Sussurro VALUES('Leonardo','Nikolas','2020-02-7 07:12:15','eae');
-INSERT INTO Sussurro VALUES('Nikolas','Leonardo','2020-02-7 07:12:15','eae');
-INSERT INTO Sussurro VALUES('Leonardo','Nikolas','2020-02-7 08:12:15','Tudo certo?');
+INSERT INTO Sussurro VALUES('Nikolas','Leonardo','2020-02-7 07:12:18','eae');
+INSERT INTO Sussurro VALUES('Leonardo','Nikolas','2020-02-7 08:12:21','Tudo certo?');
 
 insert INTO Tags VALUES('Shooter');
 insert INTO Tags VALUES('FPS');
@@ -350,6 +357,7 @@ INSERT INTO rotulacao values('Strategy','DOTA2');
 insert into Rotulacao values('Action','Esporte');
 
 
+
 --Ranking de criadorpareceiro em relação a quantos inscritos eles tem (MODIFICAR, tem que usar 3 tabelas por consulta)
 SELECT criadorparceiro, COUNT(criadorparceiro) as nroInscritos
 from inscricao
@@ -362,14 +370,16 @@ from categorizacao JOIN transmissao USING(idtransmissao) join rotulacao using(no
 group by nometag
 HAVING count(idtransmissao) >= 2;
 
---Usuário e seu email. O usuario deve ser prime e um criadores, também deve ter o maior número de bits
+--Usuário e seu email. O usuario deve ser prime e um criador, também deve ter o maior número de bits
 SELECT nomeusuario,email
 from usuarios join usuariosprime ON(nomeusuario = nomeUsuarioPrime) join criadoresparceirosdatwitch ON (criadorparceiro = nomeusuario)
 WHERE saldobits = (select max(saldobits)
                    from usuarios);
                    
-SELECT nomecategoria,count(idtransmissao) FROM transmissao join categorizacao using(idTransmissao) group BY(nomecategoria);
+--SELECT nomecategoria,count(idtransmissao) FROM transmissao join categorizacao using(idTransmissao) group BY(nomecategoria);
 
+                   
+SELECT nomecategoria,count(idtransmissao) FROM transmissao join categorizacao using(idTransmissao) group BY(nomecategoria);
 
 --Criadores que o Níkolas segue e que fizeram uma transmissão na categoria de CSGO. = "Gaules"
 SELECT DISTINCT criador
@@ -394,6 +404,16 @@ where transmissao.criador = 'Lett';
 select nomeusuarioprime,count(DISTINCT imagem)
 FROM usuariosprime join inscricao on (usuariosprime.idinscricaoprime = idinscricao) join emotes using(idinscricao)
 where inscricao.criadorparceiro = 'Gaules'
-group by nomeusuarioprime
+group by nomeusuarioprime;
 
 --Algum tipo de ranking sobre a tabela Segue?
+SELECT nomeusuarioseguido, count(nomeusuarioseguido) FROM segue 
+	where (		
+      			nomeusuariosegue in (SELECT nomeusuarioseguido from segue where (nomeusuariosegue = 'Nikolas')) 
+           		and nomeusuarioseguido != 'Nikolas'
+          		and nomeusuarioseguido in ( SELECT criadorparceiro from criadoresparceirosdatwitch)
+      		    and EXISTS (select idtransmissao from transmissao WHERE criador = nomeusuarioseguido)
+          ) 
+    GROUP by nomeusuarioseguido ORDER by count(nomeusuarioseguido) desc
+
+
