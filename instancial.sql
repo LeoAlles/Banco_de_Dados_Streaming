@@ -1,5 +1,4 @@
 DROP VIEW IF EXISTS vizualizacoesporusuariodecategoria; 
-drop view if exists MensagensNoChatDeCriador;
 DROP TABLE IF EXISTS Usuarios,Usuariosprime,CriadoresParceirosdaTwitch,Emotes,Transmissao,Inscricao,Clipes,Anunciante,Anuncio,MensagemChat,Categorizacao,Categorias,Tags,Sussurro,Segue,Contem,Rotulacao,Cheer,Visualizacao,Anunciou;
 
 CREATE TABLE Usuarios (
@@ -182,7 +181,7 @@ INSERT INTO Usuarios VALUES('Renata@email.com',19,'Renata','2001-11-21','1234567
 INSERT INTO Usuarios VALUES('Gaules@email.com',3,'Gaules','2009-12-31','123456789','Sou um user da Twitch');
 INSERT INTO Usuarios VALUES('Alanzoka@email.com',3,'Alanzoka','2009-12-31','123456789','Sou um user da Twitch');
 INSERT INTO Usuarios VALUES('Lett@email.com',3,'Lett','2009-12-31','123456789','Sou um user da Twitch');
-INSERT INTO Usuarios VALUES('Shroud@email.com',19,'Shroud','2009-12-31','123456789','Sou um user da Twitch');
+INSERT INTO Usuarios VALUES('Shroud@email.com',3,'Shroud','2009-12-31','123456789','Sou um user da Twitch');
 INSERT INTO Usuarios VALUES('criadorvazio@email.com',3,'CriadorVazio','2009-12-31','123456789','Sou um user da Twitch');
 
 INSERT INTO CriadoresParceirosdaTwitch VALUES(10,'Gaules');
@@ -195,7 +194,6 @@ INSERT INTO CriadoresParceirosdaTwitch VALUES(23,'CriadorVazio');
 INSERT INTO Inscricao VALUES('123456789011', '2009-12-31','2009-12-31', 10, 'Gaules', 'Joao');
 INSERT INTO Inscricao VALUES('123456789012', '2009-12-31','2009-12-31', 10, 'Gaules', 'Pedro');
 INSERT INTO Inscricao VALUES('123456789013', '2009-12-31','2009-12-31', 10, 'Gaules', 'Leonardo');
-INSERT INTO Inscricao VALUES('123456789031', '2009-12-31','2009-12-31', 10, 'Gaules', 'Matheus');
 INSERT INTO Inscricao VALUES('123456789014', '2009-12-31','2009-12-31', 10, 'Gaules', 'Lett');
 INSERT INTO Inscricao VALUES('123456789020', '2009-12-31','2010-02-26', 15, 'Gaules', 'Maria');
 
@@ -212,8 +210,7 @@ INSERT INTO UsuariosPrime VALUES('Matheus');
 INSERT INTO UsuariosPrime VALUES('Gabriela','123456789016');
 INSERT INTO UsuariosPrime VALUES('Renata','123456789017');
 INSERT INTO UsuariosPrime VALUES('Maria','123456789020');
-INSERT INTO UsuariosPrime VALUES('Lett');
-INSERT INTO UsuariosPrime VALUES('Shroud');
+
 
 INSERT INTO Segue VALUES('Gaules', 'Shroud');
 INSERT INTO Segue VALUES('Lett', 'Shroud');
@@ -229,44 +226,35 @@ INSERT INTO Segue VALUES('Gaules', 'Lett');
 INSERT INTO Segue VALUES('Gaules', 'Alanzoka');
 INSERT INTO Segue VALUES('Gaules', 'Leonardo');
 INSERT INTO Segue VALUES('Leonardo', 'CriadorVazio');
-INSERT INTO Segue VALUES('Shroud', 'CriadorVazio');
-INSERT INTO Segue VALUES('Shroud', 'Gaules');
-INSERT INTO Segue VALUES('Shroud', 'Nikolas');
-INSERT INTO Segue VALUES('Shroud', 'Shroud');
 
 
+INSERT INTO Emotes VALUES('carinha feliz','emotes/img1','123456789012');
+INSERT INTO Emotes VALUES('carinha triste','emotes/img2','123456789012');
+INSERT INTO Emotes VALUES('bola de futebol','emotes/img3','123456789012');
 
-INSERT INTO Emotes VALUES('FELIZ','emotes/img1','123456789012');
-INSERT INTO Emotes VALUES('TRISTE','emotes/img2','123456789012');
-INSERT INTO Emotes VALUES('BOLAFUTEBOL','emotes/img3','123456789012');
+INSERT INTO Emotes VALUES('carinha feliz','emotes/img1','123456789013');
+INSERT INTO Emotes VALUES('carinha triste','emotes/img2','123456789013');
+INSERT INTO Emotes VALUES('bola de futebol','emotes/img3','123456789013');
 
-INSERT INTO Emotes VALUES('FELIZ','emotes/img1','123456789013');
-INSERT INTO Emotes VALUES('TRISTE','emotes/img2','123456789013');
-INSERT INTO Emotes VALUES('BOLAFUTEBOL','emotes/img3','123456789013');
+INSERT INTO Emotes VALUES('carinha feliz','emotes/img1','123456789020');
+INSERT INTO Emotes VALUES('carinha triste','emotes/img2','123456789020');
+INSERT INTO Emotes VALUES('bola de futebol','emotes/img3','123456789020');
 
-INSERT INTO Emotes VALUES('FELIZ','emotes/img1','123456789031');
-INSERT INTO Emotes VALUES('TRISTE','emotes/img2','123456789031');
-INSERT INTO Emotes VALUES('BOLAFUTEBOL','emotes/img3','123456789031');
+INSERT INTO Emotes VALUES('carinha feliz','emotes/img1','123456789011');
+INSERT INTO Emotes VALUES('carinha triste','emotes/img2','123456789011');
+INSERT INTO Emotes VALUES('bola de futebol','emotes/img3','123456789011');
 
-INSERT INTO Emotes VALUES('FELIZ','emotes/img1','123456789020');
-INSERT INTO Emotes VALUES('TRISTE','emotes/img2','123456789020');
-INSERT INTO Emotes VALUES('BOLAFUTEBOL','emotes/img3','123456789020');
+INSERT INTO Emotes VALUES('carinha feliz','emotes/img1','123456789014');
+INSERT INTO Emotes VALUES('carinha triste','emotes/img2','123456789014');
+INSERT INTO Emotes VALUES('bola de futebol','emotes/img3','123456789014');
 
-INSERT INTO Emotes VALUES('FELIZ','emotes/img1','123456789011');
-INSERT INTO Emotes VALUES('TRISTE','emotes/img2','123456789011');
-INSERT INTO Emotes VALUES('BOLAFUTEBOL','emotes/img3','123456789011');
+INSERT INTO Emotes VALUES('emote1','emotes/img4','123456789015');
+INSERT INTO Emotes VALUES('emote1','emotes/img4','123456789016');
+INSERT INTO Emotes VALUES('emote1','emotes/img4','123456789017');
+INSERT INTO Emotes VALUES('emote1','emotes/img4','123456789018');
 
-INSERT INTO Emotes VALUES('FELIZ','emotes/img1','123456789014');
-INSERT INTO Emotes VALUES('TRISTE','emotes/img2','123456789014');
-INSERT INTO Emotes VALUES('BOLAFUTEBOL','emotes/img3','123456789014');
-
-INSERT INTO Emotes VALUES('EMOTE1','emotes/img4','123456789015');
-INSERT INTO Emotes VALUES('EMOTE1','emotes/img4','123456789016');
-INSERT INTO Emotes VALUES('EMOTE1','emotes/img4','123456789017');
-INSERT INTO Emotes VALUES('EMOTE1','emotes/img4','123456789018');
-
-INSERT INTO Emotes VALUES('EMOTE2','emotes/img5','123456789019');
-INSERT INTO Emotes VALUES('EMOTE2','emotes/img5','123456789010');
+INSERT INTO Emotes VALUES('emote2','emotes/img5','123456789019');
+INSERT INTO Emotes VALUES('emote2','emotes/img5','123456789010');
  
 INSERT INTO Transmissao VALUES('123456789011','2004-10-19 10:23:54','2004-10-19 10:54:54','Furia x Astralis', 'Gaules');
 INSERT INTO Transmissao VALUES('123456789012','2004-10-19 10:23:57','2004-10-19 11:54:54','NBA no Gau', 'Gaules');
@@ -316,21 +304,21 @@ INSERT INTO Anuncio VALUES(4,'anuncios/videoDell', 'DELL');
 INSERT INTO Anuncio VALUES(5,'anuncios/videoDell2', 'DELL');
 INSERT INTO Anuncio VALUES(1,'anuncios/videoApple', 'APPLE');
 
-INSERT INTO MensagemChat VALUES('EMOTE1', '2004-10-19 11:23:54', '123456789016', 'Gabriela');
+INSERT INTO MensagemChat VALUES('Ola, que dia bonito', '2004-10-19 11:23:54', '123456789011', 'Gabriela');
 
-INSERT INTO MensagemChat VALUES('TRISTE', '2004-11-19 10:23:56', '123456789013', 'Matheus');
-INSERT INTO MensagemChat VALUES('FELIZ', '2004-11-19 10:23:59', '123456789013', 'Maria');
+INSERT INTO MensagemChat VALUES('Como vai?', '2004-11-19 10:23:56', '123456789013', 'Matheus');
+INSERT INTO MensagemChat VALUES('Vou bem', '2004-11-19 10:23:59', '123456789013', 'Maria');
 
-INSERT INTO MensagemChat VALUES('Vou bem', '2004-11-19 10:24:56', '123456789010', 'Joao');
-INSERT INTO MensagemChat VALUES('FELIZ', '2004-11-19 10:25:56', '123456789014', 'Pedro');
-INSERT INTO MensagemChat VALUES('EMOTE2', '2004-11-19 10:26:56', '123456789015', 'Leonardo');
+INSERT INTO MensagemChat VALUES('Como vai?', '2004-11-19 10:24:56', '123456789010', 'Joao');
+INSERT INTO MensagemChat VALUES('Como vai?', '2004-11-19 10:25:56', '123456789014', 'Pedro');
+INSERT INTO MensagemChat VALUES('Como vai?', '2004-11-19 10:26:56', '123456789015', 'Leonardo');
 INSERT INTO MensagemChat VALUES('Como vai?', '2004-11-19 10:27:56', '123456789016', 'Matheus');
-INSERT INTO MensagemChat VALUES('EMOTE2', '2004-11-19 10:28:56', '123456789011', 'Carlos');
+INSERT INTO MensagemChat VALUES('Como vai?', '2004-11-19 10:28:56', '123456789019', 'Carlos');
 INSERT INTO MensagemChat VALUES('Como vai?', '2004-11-19 10:29:56', '123456789021', 'Leticia');
 INSERT INTO MensagemChat VALUES('Como vai?', '2004-11-19 10:30:56', '123456789022', 'Helena');
 INSERT INTO MensagemChat VALUES('Como vai?', '2004-11-19 10:31:56', '123456789023', 'Leticia');
 INSERT INTO MensagemChat VALUES('Como vai?', '2004-11-19 10:33:56', '123456789024', 'Leticia');
-INSERT INTO MensagemChat VALUES('EMOTE1', '2004-11-19 10:34:56', '123456789025', 'Nikolas');
+INSERT INTO MensagemChat VALUES('Como vai?', '2004-11-19 10:34:56', '123456789025', 'Nikolas');
 
 
 INSERT INTO Categorias VALUES ('CSGO');
@@ -393,131 +381,3 @@ INSERT into anunciou VALUES(4,'123456789011');
 INSERT into anunciou VALUES(5,'123456789012');
 INSERT into anunciou VALUES(1,'123456789011');
 INSERT into anunciou VALUES(1,'123456789012');
-
-
-
--- Ranking de criadorpareceiro em relação a quantos inscritos eles tem (MODIFICAR, tem que usar 3 tabelas por consulta)
-SELECT criadorparceiro, COUNT(criadorparceiro) as nroInscritos
-from inscricao
-GROUP by criadorparceiro
-order by nroInscritos DESC;
-
---1) Tags que rotulam 2 ou mais transmissões
-SELECT nometag
-from categorizacao JOIN transmissao USING(idtransmissao) join rotulacao using(nomecategoria)
-group by nometag
-HAVING count(idtransmissao) >= 2;
-
---2) Usuário e seu email. O usuario deve ser prime e um criadores, também deve ter o maior número de bits
-SELECT nomeusuario,email
-from usuarios join usuariosprime ON(nomeusuario = nomeUsuarioPrime) join criadoresparceirosdatwitch ON (criadorparceiro = nomeusuario)
-WHERE saldobits = (select max(saldobits)
-                   from usuarios);
-                   
---SELECT nomecategoria,count(idtransmissao) FROM transmissao join categorizacao using(idTransmissao) group BY(nomecategoria);
-
-                   
-SELECT nomecategoria,count(idtransmissao) FROM transmissao join categorizacao using(idTransmissao) group BY(nomecategoria);
-
---3) Criadores que o Níkolas segue e que fizeram uma transmissão na categoria de CSGO. = "Gaules"
-SELECT DISTINCT criador
-FROM segue join transmissao on(transmissao.criador = segue.nomeusuarioseguido) join categorizacao USING (idtransmissao)
-where segue.nomeusuariosegue = 'Nikolas' and nomecategoria = 'CSGO';
-
---4) Criadores, que o níkolas segue, e seus numeros de inscritos em ordem decrescente
-SELECT criadorparceiro, COUNT(criadorparceiro) as nroInscritos
-from inscricao
-where criadorparceiro in (SELECT DISTINCT criador
-							FROM segue join transmissao on(transmissao.criador = segue.nomeusuarioseguido) 
-							where segue.nomeusuariosegue = 'Nikolas' )
-GROUP by criadorparceiro
-order by nroInscritos DESC;
-
---5) Toda informação dos usuários que escreveram no chat de alguma stream do Lett
-select usuarios.email,usuarios.saldobits,usuarios.nomeusuario,usuarios.datanascimento,usuarios.telefone,usuarios.bio
-from transmissao join mensagemchat USING(idtransmissao) Join usuarios using(nomeusuario)
-where transmissao.criador = 'Lett';
-	
---6) Usuarios prime com inscrição prime do 'Gaules' e o numero de emotes que eles receberam da inscrição
-select nomeusuarioprime,count(DISTINCT imagem)
-FROM usuariosprime join inscricao on (usuariosprime.idinscricaoprime = idinscricao) join emotes using(idinscricao)
-where inscricao.criadorparceiro = 'Gaules'
-group by nomeusuarioprime;
-
---7) Consulta que rankeia quem eh mais provável que Nikolas goste de assistir
-SELECT nomeusuarioseguido, count(nomeusuarioseguido) FROM segue 
-	where (		
-      			nomeusuariosegue in (SELECT nomeusuarioseguido from segue where (nomeusuariosegue = 'Nikolas')) 
-           		and nomeusuarioseguido != 'Nikolas'
-          		and nomeusuarioseguido in ( SELECT criadorparceiro from criadoresparceirosdatwitch)
-      		    and nomeusuarioseguido in (select DISTINCT criador from transmissao)
-          ) 
-    GROUP by nomeusuarioseguido ORDER by count(nomeusuarioseguido) desc; 
-
-
---8) Informacoes de atividade de usuários, tudo que eles fizeram na plataforma
-SELECT  nomeusuario, nmrInscricoes, nmrVizualizacoes, clipesCriados, segue, sussurroEnv, msgChatEnv, cheersDados
-    from 
-    (SELECT nomeusuario, COUNT(criadorparceiro) as nmrInscricoes from usuarios JOIN inscricao USING(nomeusuario) GROUP by (nomeusuario)) as t1
-	FULL JOIN
-    (SELECT nomeusuario, COUNT(idtransmissao) as nmrVizualizacoes from usuarios JOIN visualizacao USING(nomeusuario) GROUP by (nomeusuario)) as t2  USING(nomeusuario)
-	FULL JOIN
-    (SELECT nomeusuario, COUNT(idclipe) as clipesCriados from usuarios JOIN clipes USING(nomeusuario) GROUP by (nomeusuario)) as t4  USING(nomeusuario)
-    FULL JOIN 
-    (SELECT nomeusuario, COUNT(nomeusuarioseguido) as segue from usuarios as u JOIN segue as s ON(nomeusuario=nomeusuariosegue) GROUP by (nomeusuario)) as t5 USING(nomeusuario)
-    FULL JOIN 
-    (SELECT nomeusuario, COUNT(nomeusuariorecebe) as sussurroEnv from usuarios as u JOIN sussurro as s on(nomeusuario=nomeusuariomanda) GROUP by (nomeusuario)) as t6 USING(nomeusuario)
-    FULL JOIN 
-    (SELECT nomeusuario, COUNT(idtransmissao) as msgChatEnv from usuarios JOIN mensagemchat USING(nomeusuario) GROUP by (nomeusuario)) as t7 USING(nomeusuario)
-    FULL JOIN 
-    (SELECT nomeusuario, COUNT(criadorparceiro) as cheersDados from usuarios JOIN cheer USING(nomeusuario) GROUP by (nomeusuario)) as t8 USING(nomeusuario)
-order by(nomeusuario);
-
-
---9) Quantas vezes o anuncio de uma empresa foi visto    
-SELECT nomeEmpresa,COUNT(anunciou)
-	from Anunciou join Anuncio USING(numeroanuncio) JOIN visualizacao USING(idtransmissao) 
-GROUP by(nomeempresa);
-
--- Quantas vezes as transmissoes de cada criador foram vistas
-SELECT criadorparceiro, COUNT(visualizacao) 
-	from criadoresparceirosdatwitch as C join transmissao as T on(C.criadorparceiro = T.criador) join visualizacao USING(idtransmissao)
-GROUP by(criadorparceiro);
-
---10) Quantos anuncios foram passados pro cada criador
-SELECT criador, count(anunciou)
-FROM transmissao join visualizacao USING(idtransmissao) join anunciou USING(idtransmissao)
-GROUP by(criador) ORDER by(COUNT(anunciou));
-
-
---Criadores que seguem todos ou mais dos usuarios que o "Leonardo" segue
-select distinct criadorparceiro
-FROM segue segue_ext JOIN criadoresparceirosdatwitch ON (segue_ext.nomeusuariosegue = criadoresparceirosdatwitch.criadorparceiro)
-where not exists (select segue.nomeusuarioseguido
-               	 from segue
-                 where nomeusuariosegue = 'Leonardo' AND
-                    nomeusuarioseguido not in
-                            		(SELECT DISTINCT segue.nomeusuarioseguido
-                           			 FROM segue 
-                            		 where segue.nomeusuariosegue = segue_ext.nomeusuariosegue));
-       
-
-
-                    
-   
-create view MensagensNoChatDeCriador as
-  SELECT mensagemchat.nomeusuario,texto,criador
-  FROM mensagemchat join transmissao USING(idtransmissao);
-
-select *
-from mensagensnochatdecriador;
-
---ranking de emotes mais populares no chat do Gaules                  
-select nomeemote-- as nroDeEmote
-from MensagensNoChatDeCriador join inscricao ON(MensagensNoChatDeCriador.nomeusuario = inscricao.nomeusuario) join emotes on(emotes.idinscricao = inscricao.idinscricao)
-where MensagensNoChatDeCriador.texto = emotes.nomeemote and MensagensNoChatDeCriador.criador = 'Gaules'
-GROUP by nomeemote
-order by  (COUNT(nomeemote)) DESC;
-
-
-
