@@ -164,6 +164,14 @@ CREATE TABLE Visualizacao(
   	FOREIGN KEY (idTransmissao) REFERENCES Transmissao(idTransmissao) on DELETE cascade
 );
 
+-- VIEW
+CREATE VIEW VizualizacoesporUsuariodeCategoria AS
+SELECT nomeusuario, nomecategoria, count(visualizacao) as vizualizacoes
+	FROM visualizacao join categorizacao USING(idtransmissao)
+    GROUP by (nomeusuario, nomecategoria) ORDER by (nomeusuario);
+    
+    
+
 INSERT INTO Usuarios VALUES('Joao@email.com',0,'Joao','2001-05-01','123456789','Sou um user da Twitch');
 INSERT INTO Usuarios VALUES('Pedro@email.com',15,'Pedro','2001-06-11','123456789','Sou um user da Twitch');
 INSERT INTO Usuarios VALUES('Leonardo@email.com',19,'Leonardo','2001-09-11','123456789','Sou um user da Twitch');
