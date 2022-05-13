@@ -89,11 +89,6 @@ SELECT criador, count(anunciou)
 	FROM transmissao join visualizacao USING(idtransmissao) join anunciou USING(idtransmissao)
 GROUP by(criador) ORDER by(COUNT(anunciou));
 
--- VIEW
-CREATE VIEW VizualizacoesporUsuariodeCategoria AS
-SELECT nomeusuario, nomecategoria, count(visualizacao) as vizualizacoes
-	FROM visualizacao join categorizacao USING(idtransmissao)
-    GROUP by (nomeusuario, nomecategoria) ORDER by (nomeusuario);
     
 -- Pega as vizualizacoes por categoria do Leonardo 
 SELECT nomecategoria,vizualizacoes FRom VizualizacoesporUsuariodeCategoria 
@@ -109,5 +104,8 @@ SELECT DISTINCT criador,COUNT(criador) from
   WHERE nomeusuario='Leonardo'
 GROUP BY(criador)
 ORDER BY(COUNT(criador)) DESC;
+
+
+
 
     
