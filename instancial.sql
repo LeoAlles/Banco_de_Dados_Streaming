@@ -1,4 +1,5 @@
 DROP VIEW IF EXISTS vizualizacoesporusuariodecategoria; 
+DROP VIEW IF EXISTS MensagensNoChatDeCriador;
 DROP TABLE IF EXISTS Usuarios,Usuariosprime,CriadoresParceirosdaTwitch,Emotes,Transmissao,Inscricao,Clipes,Anunciante,Anuncio,MensagemChat,Categorizacao,Categorias,Tags,Sussurro,Segue,Contem,Rotulacao,Cheer,Visualizacao,Anunciou;
 
 CREATE TABLE Usuarios (
@@ -169,6 +170,11 @@ CREATE VIEW VizualizacoesporUsuariodeCategoria AS
 SELECT nomeusuario, nomecategoria, count(visualizacao) as vizualizacoes
 	FROM visualizacao join categorizacao USING(idtransmissao)
     GROUP by (nomeusuario, nomecategoria) ORDER by (nomeusuario);
+
+--view sobre quem mandou a mensagem, a mensagem e a que criador foi mandada a mensagem   
+create view MensagensNoChatDeCriador as
+  SELECT mensagemchat.nomeusuario,texto,transmissao.criador
+  FROM mensagemchat join transmissao USING(idtransmissao);
     
     
 
