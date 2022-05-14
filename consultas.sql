@@ -53,18 +53,18 @@ SELECT nomeusuarioseguido, count(nomeusuarioseguido) FROM segue
 SELECT  nomeusuario, nmrInscricoes, nmrVizualizacoes, clipesCriados, segue, sussurroEnv, msgChatEnv, cheersDados
     from 
     (SELECT nomeusuario, COUNT(criadorparceiro) as nmrInscricoes from usuarios JOIN inscricao USING(nomeusuario) GROUP by (nomeusuario)) as t1
-	natural JOIN
-    (SELECT nomeusuario, COUNT(idtransmissao) as nmrVizualizacoes from usuarios JOIN visualizacao USING(nomeusuario) GROUP by (nomeusuario)) as t2
-	natural JOIN
-    (SELECT nomeusuario, COUNT(idclipe) as clipesCriados from usuarios JOIN clipes USING(nomeusuario) GROUP by (nomeusuario)) as t4
-    natural JOIN
-    (SELECT nomeusuario, COUNT(nomeusuarioseguido) as segue from usuarios as u JOIN segue as s ON(nomeusuario=nomeusuariosegue) GROUP by (nomeusuario)) as t5
-    NATURAL JOIN
-    (SELECT nomeusuario, COUNT(nomeusuariorecebe) as sussurroEnv from usuarios as u JOIN sussurro as s on(nomeusuario=nomeusuariomanda) GROUP by (nomeusuario)) as t6
-    natural JOIN
-    (SELECT nomeusuario, COUNT(idtransmissao) as msgChatEnv from usuarios JOIN mensagemchat USING(nomeusuario) GROUP by (nomeusuario)) as t7
-    natural JOIN
-    (SELECT nomeusuario, COUNT(criadorparceiro) as cheersDados from usuarios JOIN cheer USING(nomeusuario) GROUP by (nomeusuario)) as t8
+	FULL JOIN
+    (SELECT nomeusuario, COUNT(idtransmissao) as nmrVizualizacoes from usuarios JOIN visualizacao USING(nomeusuario) GROUP by (nomeusuario)) as t2  USING(nomeusuario)
+	FULL JOIN
+    (SELECT nomeusuario, COUNT(idclipe) as clipesCriados from usuarios JOIN clipes USING(nomeusuario) GROUP by (nomeusuario)) as t4  USING(nomeusuario)
+    FULL JOIN 
+    (SELECT nomeusuario, COUNT(nomeusuarioseguido) as segue from usuarios as u JOIN segue as s ON(nomeusuario=nomeusuariosegue) GROUP by (nomeusuario)) as t5 USING(nomeusuario)
+    FULL JOIN 
+    (SELECT nomeusuario, COUNT(nomeusuariorecebe) as sussurroEnv from usuarios as u JOIN sussurro as s on(nomeusuario=nomeusuariomanda) GROUP by (nomeusuario)) as t6 USING(nomeusuario)
+    FULL JOIN 
+    (SELECT nomeusuario, COUNT(idtransmissao) as msgChatEnv from usuarios JOIN mensagemchat USING(nomeusuario) GROUP by (nomeusuario)) as t7 USING(nomeusuario)
+    FULL JOIN 
+    (SELECT nomeusuario, COUNT(criadorparceiro) as cheersDados from usuarios JOIN cheer USING(nomeusuario) GROUP by (nomeusuario)) as t8 USING(nomeusuario)
 order by(nomeusuario);
 
 
