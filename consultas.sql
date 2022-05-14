@@ -1,19 +1,16 @@
---1) Tags que rotulam 2 ou mais transmissões
+-- 1) Tags que rotulam 2 ou mais transmissões
 SELECT nometag
 from categorizacao JOIN transmissao USING(idtransmissao) join rotulacao using(nomecategoria)
 group by nometag
 HAVING count(idtransmissao) >= 2;
 
---2) Usuário e seu email. O usuario deve ser prime e um criadores, também deve ter o maior número de bits
+-- 2) Usuário e seu email. O usuario deve ser prime e um criadores, também deve ter o maior número de bits
 SELECT nomeusuario,email
 from usuarios join usuariosprime ON(nomeusuario = nomeUsuarioPrime) join criadoresparceirosdatwitch ON (criadorparceiro = nomeusuario)
-WHERE saldobits = (select max(saldobits)
-                   from usuarios);
-                   
-SELECT nomecategoria,count(idtransmissao) FROM transmissao join categorizacao using(idTransmissao) group BY(nomecategoria);
+WHERE saldobits = (select max(saldobits) from usuarios);
+                  
 
-
---3) Criadores que o Níkolas segue e que fizeram uma transmissão na categoria de CSGO. = "Gaules"
+-- 3) Criadores que o Níkolas segue e que fizeram uma transmissão na categoria de CSGO. = "Gaules"
 SELECT DISTINCT criador
 FROM segue join transmissao on(transmissao.criador = segue.nomeusuarioseguido) join categorizacao USING (idtransmissao)
 where segue.nomeusuariosegue = 'Nikolas' and nomecategoria = 'CSGO';
@@ -33,19 +30,19 @@ from transmissao join mensagemchat USING(idtransmissao) Join usuarios using(nome
 where transmissao.criador = 'Lett';
 	
 --6) Usuarios prime com inscrição prime do 'Gaules' e o numero de emotes que eles receberam da inscrição
-select nomeusuarioprime,count(DISTINCT imagem)
+select nomeusuarioprime,count(DISTINCT imagem) as emotes
 FROM usuariosprime join inscricao on (usuariosprime.idinscricaoprime = idinscricao) join emotes using(idinscricao)
 where inscricao.criadorparceiro = 'Gaules'
 group by nomeusuarioprime;
 
---7) Algum tipo de ranking sobre a tabela Segue?
-SELECT nomeusuarioseguido, count(nomeusuarioseguido) FROM segue 
+--7) Recomendacoes para Nikolas, ranking de quem é mais seguido pelos usuários que Nikolas segue
+SELECT nomeusuarioseguido, count(nomeusuarioseguido) as nmrSeguidoresSeguidos FROM segue 
 	where (		
-      			nomeusuariosegue in (SELECT nomeusuarioseguido from segue where (nomeusuariosegue = 'Nikolas')) 
-           		and nomeusuarioseguido != 'Nikolas'
-          		and nomeusuarioseguido in ( SELECT criadorparceiro from criadoresparceirosdatwitch)
-      		    and nomeusuarioseguido in (select DISTINCT criador from transmissao)
-          ) 
+      nomeusuariosegue in (SELECT nomeusuarioseguido from segue where (nomeusuariosegue = 'Nikolas')) 
+      and nomeusuarioseguido != 'Nikolas'
+      and nomeusuarioseguido in ( SELECT criadorparceiro from criadoresparceirosdatwitch)
+      and nomeusuarioseguido in (select DISTINCT criador from transmissao)
+    ) 
     GROUP by nomeusuarioseguido ORDER by count(nomeusuarioseguido) desc; 
 
 
@@ -69,25 +66,19 @@ order by(nomeusuario);
 
 
 --9) Quantas vezes o anuncio de uma empresa foi visto    
-SELECT nomeEmpresa,COUNT(anunciou)
+SELECT nomeEmpresa,COUNT(anunciou) as anunciou
 	from Anunciou join Anuncio USING(numeroanuncio) JOIN visualizacao USING(idtransmissao) 
 GROUP by(nomeempresa);
 
--- Quantas vezes as transmissoes de cada criador foram vistas
-SELECT criadorparceiro, COUNT(visualizacao) 
-	from criadoresparceirosdatwitch as C join transmissao as T on(C.criadorparceiro = T.criador) join visualizacao USING(idtransmissao)
-GROUP by(criadorparceiro);
 
 --10) Quantos anuncios foram passados pro cada criador
-SELECT criador, count(anunciou)
+SELECT criador, count(anunciou) as passou
 	FROM transmissao join visualizacao USING(idtransmissao) join anunciou USING(idtransmissao)
 GROUP by(criador) ORDER by(COUNT(anunciou));
 
     
-    
-    
--- seleciona criadores que fazem transmissoes nas categorias vistas por Leonardo em ordem decrescente de transmissoes feitas.    
-SELECT DISTINCT criador,COUNT(criador) from 
+-- 11)seleciona criadores que fazem transmissoes nas categorias vistas por Leonardo em ordem decrescente de transmissoes feitas.    
+SELECT DISTINCT criador,COUNT(criador) as transmissoesfeitas from 
   VizualizacoesporUsuariodeCategoria 
   join categorizacao USING(nomecategoria) 
   join transmissao using(idtransmissao) 
@@ -96,7 +87,7 @@ GROUP BY(criador)
 ORDER BY(COUNT(criador)) DESC;
 
 
---Criadores que seguem todos ou mais dos usuarios que o "Leonardo" segue
+-- 12) Criadores que seguem todos ou mais dos usuarios que o "Leonardo" segue
 select distinct criadorparceiro
 FROM segue segue_ext JOIN criadoresparceirosdatwitch ON (segue_ext.nomeusuariosegue = criadoresparceirosdatwitch.criadorparceiro)
 where not exists (select segue.nomeusuarioseguido
@@ -108,13 +99,10 @@ where not exists (select segue.nomeusuarioseguido
                             		 where segue.nomeusuariosegue = segue_ext.nomeusuariosegue));
        
 
-
---ranking de emotes mais populares no chat do Gaules                  
+-- 13) ranking de emotes mais populares no chat do Gaules                  
 select nomeemote
 from MensagensNoChatDeCriador join inscricao ON(MensagensNoChatDeCriador.nomeusuario = inscricao.nomeusuario) join emotes on(emotes.idinscricao = inscricao.idinscricao)
 where MensagensNoChatDeCriador.texto = emotes.nomeemote and MensagensNoChatDeCriador.criador = 'Gaules'
 GROUP by nomeemote
 order by  (COUNT(nomeemote)) DESC;
 
-
-    
