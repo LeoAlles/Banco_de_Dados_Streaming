@@ -1,9 +1,3 @@
--- Ranking de criadorpareceiro em relação a quantos inscritos eles tem (MODIFICAR, tem que usar 3 tabelas por consulta)
-SELECT criadorparceiro, COUNT(criadorparceiro) as nroInscritos
-from inscricao
-GROUP by criadorparceiro
-order by nroInscritos DESC;
-
 --1) Tags que rotulam 2 ou mais transmissões
 SELECT nometag
 from categorizacao JOIN transmissao USING(idtransmissao) join rotulacao using(nomecategoria)
@@ -90,10 +84,6 @@ SELECT criador, count(anunciou)
 GROUP by(criador) ORDER by(COUNT(anunciou));
 
     
--- Pega as vizualizacoes por categoria do Leonardo 
-SELECT nomecategoria,vizualizacoes FRom VizualizacoesporUsuariodeCategoria 
-	WHERE nomeusuario = 'Leonardo'
-    GROUP by (nomecategoria, vizualizacoes );
     
     
 -- seleciona criadores que fazem transmissoes nas categorias vistas por Leonardo em ordem decrescente de transmissoes feitas.    
@@ -106,6 +96,25 @@ GROUP BY(criador)
 ORDER BY(COUNT(criador)) DESC;
 
 
+--Criadores que seguem todos ou mais dos usuarios que o "Leonardo" segue
+select distinct criadorparceiro
+FROM segue segue_ext JOIN criadoresparceirosdatwitch ON (segue_ext.nomeusuariosegue = criadoresparceirosdatwitch.criadorparceiro)
+where not exists (select segue.nomeusuarioseguido
+               	 from segue
+                 where nomeusuariosegue = 'Leonardo' AND
+                    nomeusuarioseguido not in
+                            		(SELECT DISTINCT segue.nomeusuarioseguido
+                           			 FROM segue 
+                            		 where segue.nomeusuariosegue = segue_ext.nomeusuariosegue));
+       
+
+
+--ranking de emotes mais populares no chat do Gaules                  
+select nomeemote
+from MensagensNoChatDeCriador join inscricao ON(MensagensNoChatDeCriador.nomeusuario = inscricao.nomeusuario) join emotes on(emotes.idinscricao = inscricao.idinscricao)
+where MensagensNoChatDeCriador.texto = emotes.nomeemote and MensagensNoChatDeCriador.criador = 'Gaules'
+GROUP by nomeemote
+order by  (COUNT(nomeemote)) DESC;
 
 
     

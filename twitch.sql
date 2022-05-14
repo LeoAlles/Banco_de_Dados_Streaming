@@ -165,6 +165,17 @@ CREATE TABLE Visualizacao(
   	FOREIGN KEY (idTransmissao) REFERENCES Transmissao(idTransmissao) on DELETE cascade
 );
 
+-- VIEW
+CREATE VIEW VizualizacoesporUsuariodeCategoria AS
+SELECT nomeusuario, nomecategoria, count(visualizacao) as vizualizacoes
+	FROM visualizacao join categorizacao USING(idtransmissao)
+    GROUP by (nomeusuario, nomecategoria) ORDER by (nomeusuario);
+
+--view sobre quem mandou a mensagem, a mensagem e a que criador foi mandada a mensagem   
+create view MensagensNoChatDeCriador as
+  SELECT mensagemchat.nomeusuario,texto,transmissao.criador
+  FROM mensagemchat join transmissao USING(idtransmissao);
+
 INSERT INTO Usuarios VALUES('Joao@email.com',0,'Joao','2001-05-01','123456789','Sou um user da Twitch');
 INSERT INTO Usuarios VALUES('Pedro@email.com',15,'Pedro','2001-06-11','123456789','Sou um user da Twitch');
 INSERT INTO Usuarios VALUES('Leonardo@email.com',19,'Leonardo','2001-09-11','123456789','Sou um user da Twitch');
@@ -414,10 +425,8 @@ from usuarios join usuariosprime ON(nomeusuario = nomeUsuarioPrime) join criador
 WHERE saldobits = (select max(saldobits)
                    from usuarios);
                    
---SELECT nomecategoria,count(idtransmissao) FROM transmissao join categorizacao using(idTransmissao) group BY(nomecategoria);
-
-                   
 SELECT nomecategoria,count(idtransmissao) FROM transmissao join categorizacao using(idTransmissao) group BY(nomecategoria);
+
 
 --3) Criadores que o Níkolas segue e que fizeram uma transmissão na categoria de CSGO. = "Gaules"
 SELECT DISTINCT criador
@@ -444,7 +453,7 @@ FROM usuariosprime join inscricao on (usuariosprime.idinscricaoprime = idinscric
 where inscricao.criadorparceiro = 'Gaules'
 group by nomeusuarioprime;
 
---7) Consulta que rankeia quem eh mais provável que Nikolas goste de assistir
+--7) Algum tipo de ranking sobre a tabela Segue?
 SELECT nomeusuarioseguido, count(nomeusuarioseguido) FROM segue 
 	where (		
       			nomeusuariosegue in (SELECT nomeusuarioseguido from segue where (nomeusuariosegue = 'Nikolas')) 
@@ -459,18 +468,18 @@ SELECT nomeusuarioseguido, count(nomeusuarioseguido) FROM segue
 SELECT  nomeusuario, nmrInscricoes, nmrVizualizacoes, clipesCriados, segue, sussurroEnv, msgChatEnv, cheersDados
     from 
     (SELECT nomeusuario, COUNT(criadorparceiro) as nmrInscricoes from usuarios JOIN inscricao USING(nomeusuario) GROUP by (nomeusuario)) as t1
-	FULL JOIN
-    (SELECT nomeusuario, COUNT(idtransmissao) as nmrVizualizacoes from usuarios JOIN visualizacao USING(nomeusuario) GROUP by (nomeusuario)) as t2  USING(nomeusuario)
-	FULL JOIN
-    (SELECT nomeusuario, COUNT(idclipe) as clipesCriados from usuarios JOIN clipes USING(nomeusuario) GROUP by (nomeusuario)) as t4  USING(nomeusuario)
-    FULL JOIN 
-    (SELECT nomeusuario, COUNT(nomeusuarioseguido) as segue from usuarios as u JOIN segue as s ON(nomeusuario=nomeusuariosegue) GROUP by (nomeusuario)) as t5 USING(nomeusuario)
-    FULL JOIN 
-    (SELECT nomeusuario, COUNT(nomeusuariorecebe) as sussurroEnv from usuarios as u JOIN sussurro as s on(nomeusuario=nomeusuariomanda) GROUP by (nomeusuario)) as t6 USING(nomeusuario)
-    FULL JOIN 
-    (SELECT nomeusuario, COUNT(idtransmissao) as msgChatEnv from usuarios JOIN mensagemchat USING(nomeusuario) GROUP by (nomeusuario)) as t7 USING(nomeusuario)
-    FULL JOIN 
-    (SELECT nomeusuario, COUNT(criadorparceiro) as cheersDados from usuarios JOIN cheer USING(nomeusuario) GROUP by (nomeusuario)) as t8 USING(nomeusuario)
+	natural JOIN
+    (SELECT nomeusuario, COUNT(idtransmissao) as nmrVizualizacoes from usuarios JOIN visualizacao USING(nomeusuario) GROUP by (nomeusuario)) as t2
+	natural JOIN
+    (SELECT nomeusuario, COUNT(idclipe) as clipesCriados from usuarios JOIN clipes USING(nomeusuario) GROUP by (nomeusuario)) as t4
+    natural JOIN
+    (SELECT nomeusuario, COUNT(nomeusuarioseguido) as segue from usuarios as u JOIN segue as s ON(nomeusuario=nomeusuariosegue) GROUP by (nomeusuario)) as t5
+    NATURAL JOIN
+    (SELECT nomeusuario, COUNT(nomeusuariorecebe) as sussurroEnv from usuarios as u JOIN sussurro as s on(nomeusuario=nomeusuariomanda) GROUP by (nomeusuario)) as t6
+    natural JOIN
+    (SELECT nomeusuario, COUNT(idtransmissao) as msgChatEnv from usuarios JOIN mensagemchat USING(nomeusuario) GROUP by (nomeusuario)) as t7
+    natural JOIN
+    (SELECT nomeusuario, COUNT(criadorparceiro) as cheersDados from usuarios JOIN cheer USING(nomeusuario) GROUP by (nomeusuario)) as t8
 order by(nomeusuario);
 
 
@@ -486,8 +495,24 @@ GROUP by(criadorparceiro);
 
 --10) Quantos anuncios foram passados pro cada criador
 SELECT criador, count(anunciou)
-FROM transmissao join visualizacao USING(idtransmissao) join anunciou USING(idtransmissao)
+	FROM transmissao join visualizacao USING(idtransmissao) join anunciou USING(idtransmissao)
 GROUP by(criador) ORDER by(COUNT(anunciou));
+
+    
+-- Pega as vizualizacoes por categoria do Leonardo 
+SELECT nomecategoria,vizualizacoes FRom VizualizacoesporUsuariodeCategoria 
+	WHERE nomeusuario = 'Leonardo'
+    GROUP by (nomecategoria, vizualizacoes );
+    
+    
+-- seleciona criadores que fazem transmissoes nas categorias vistas por Leonardo em ordem decrescente de transmissoes feitas.    
+SELECT DISTINCT criador,COUNT(criador) from 
+  VizualizacoesporUsuariodeCategoria 
+  join categorizacao USING(nomecategoria) 
+  join transmissao using(idtransmissao) 
+  WHERE nomeusuario='Leonardo'
+GROUP BY(criador)
+ORDER BY(COUNT(criador)) DESC;
 
 
 --Criadores que seguem todos ou mais dos usuarios que o "Leonardo" segue
@@ -503,21 +528,11 @@ where not exists (select segue.nomeusuarioseguido
        
 
 
-                    
-   
-create view MensagensNoChatDeCriador as
-  SELECT mensagemchat.nomeusuario,texto,criador
-  FROM mensagemchat join transmissao USING(idtransmissao);
-
-select *
-from mensagensnochatdecriador;
-
 --ranking de emotes mais populares no chat do Gaules                  
-select nomeemote-- as nroDeEmote
+select nomeemote
 from MensagensNoChatDeCriador join inscricao ON(MensagensNoChatDeCriador.nomeusuario = inscricao.nomeusuario) join emotes on(emotes.idinscricao = inscricao.idinscricao)
 where MensagensNoChatDeCriador.texto = emotes.nomeemote and MensagensNoChatDeCriador.criador = 'Gaules'
 GROUP by nomeemote
 order by  (COUNT(nomeemote)) DESC;
-
 
 
