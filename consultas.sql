@@ -4,7 +4,7 @@ from categorizacao JOIN transmissao USING(idtransmissao) join rotulacao using(no
 group by nometag
 HAVING count(idtransmissao) >= 2;
 
--- 2) Usuário e seu email. O usuario deve ser prime e um criadores, também deve ter o maior número de bits
+-- 2) Usuário e seu email. O usuario deve ser prime e um criador, também deve ter o maior número de bits
 SELECT nomeusuario,email
 from usuarios join usuariosprime ON(nomeusuario = nomeUsuarioPrime) join criadoresparceirosdatwitch ON (criadorparceiro = nomeusuario)
 WHERE saldobits = (select max(saldobits) from usuarios);
